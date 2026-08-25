@@ -34,47 +34,23 @@
       position: relative; z-index: 2;
       max-width: 760px; padding: 0 24px;
     }
-    .hero-pre {
-      font-size: .7rem; font-weight: 600; letter-spacing: .32em;
-      text-transform: uppercase; color: rgba(255,255,255,.7);
-      margin-bottom: 20px; display: block;
-    }
-    .hero-logo {
-      width: 120px; height: 120px; border-radius: 50%;
-      object-fit: cover; border: 2.5px solid rgba(255,255,255,.5);
-      margin-bottom: 28px;
-      box-shadow: 0 0 0 8px rgba(255,255,255,.08);
-    }
     .hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(3.2rem, 9vw, 7rem);
-      font-weight: 300; color: var(--white);
-      line-height: 1; letter-spacing: .02em; margin-bottom: 10px;
+      font-family: var(--font-script);
+      font-size: clamp(4rem, 11vw, 8.5rem);
+      font-weight: 400; color: var(--white);
+      line-height: 1; margin-bottom: 18px;
     }
-    .hero-title em { font-style: italic; }
-    .hero-tagline {
-      font-family: var(--font-serif); font-style: italic;
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
-      color: rgba(255,255,255,.75); margin-bottom: 22px;
-      letter-spacing: .06em;
-    }
-    .hero-location {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
-      color: rgba(255,255,255,.6); margin-bottom: 40px;
-    }
-    .hero-divider {
-      width: 1px; height: 14px; background: rgba(255,255,255,.3); display: inline-block; margin: 0 4px;
+    .hero-since {
+      font-family: var(--font-sans);
+      font-size: .78rem; font-weight: 600; letter-spacing: .34em;
+      text-transform: uppercase; color: rgba(255,255,255,.75);
+      margin-bottom: 44px;
     }
     .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .hero-btns .btn {
       border-radius: 2px; font-size: .72rem; letter-spacing: .14em;
       padding: 14px 36px;
     }
-    .btn-hero-primary {
-      background: var(--white); color: var(--espresso);
-    }
-    .btn-hero-primary:hover { background: var(--rose); color: var(--white); }
     .btn-hero-outline {
       background: transparent; color: var(--white);
       border: 1px solid rgba(255,255,255,.5);
@@ -236,15 +212,8 @@
       .section { padding: 56px 5% !important; }
       .hero-stats { gap: 12px; }
       /* Hero móvil */
-      .hero-pre { font-size: .6rem; letter-spacing: .18em; }
-      .hero-logo { width: 88px; height: 88px; margin-bottom: 18px; }
-      .hero-title { font-size: clamp(2.6rem, 12vw, 4rem); }
-      .hero-tagline { font-size: .95rem; }
-      .hero-location {
-        flex-wrap: wrap; justify-content: center; gap: 6px;
-        font-size: .62rem; letter-spacing: .1em; margin-bottom: 28px;
-      }
-      .hero-divider { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.4); align-self: center; }
+      .hero-title { font-size: clamp(3rem, 15vw, 5rem); }
+      .hero-since { font-size: .64rem; letter-spacing: .26em; margin-bottom: 32px; }
       .hero-btns { flex-direction: column; gap: 10px; align-items: center; }
       .hero-btns .btn { width: 80%; text-align: center; justify-content: center; padding: 13px 20px; }
       .hero-scroll { display: none; }
@@ -280,19 +249,9 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-pre">Pastelería Artesanal · Sucre, Bolivia</span>
-    <img class="hero-logo" src="285654978_4898080570315106_8575377553896454271_n.jpg" alt="Más Deli" />
-    <h1 class="hero-title"><em>Más Deli</em></h1>
-    <p class="hero-tagline">— Dulces Recuerdos —</p>
-    <p class="hero-location">
-      Sucre, Bolivia
-      <span class="hero-divider"></span>
-      3 Sucursales
-      <span class="hero-divider"></span>
-      Desde 80 Bs
-    </p>
+    <h1 class="hero-title">Más Deli</h1>
+    <p class="hero-since">Desde 2008</p>
     <div class="hero-btns">
-      <a href="pedidos.html" class="btn btn-hero-primary">Ver Catálogo</a>
       <a href="productos.html" class="btn btn-hero-outline">Nuestros Productos</a>
     </div>
   </div>
