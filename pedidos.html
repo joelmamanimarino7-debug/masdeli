@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realizar Pedido – Más Deli Pastelería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* PAGE HERO */
+    .page-hero { height: 38vh; min-height: 280px; position: relative; display:flex; align-items:flex-end; padding-bottom:50px; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; background: url('post_1.jpg') center 35%/cover no-repeat; }
+    .page-hero-overlay { position:absolute; inset:0; background: linear-gradient(to bottom, rgba(20,8,4,.45) 0%, rgba(20,8,4,.78) 100%); }
+    .page-hero-content { position:relative; z-index:2; padding:0 5%; }
+    .page-breadcrumb { font-size:.65rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:10px; }
+    .page-breadcrumb a { color:rgba(255,255,255,.5); text-decoration:none; }
+    .page-title { font-family:var(--font-serif); font-weight:300; font-size:clamp(2.4rem,6vw,4.8rem); color:var(--white); line-height:1.1; }
+    .page-title em { font-style:italic; }
+
+    .section { padding: 80px 5%; }
+    .section-white { background: var(--white); }
+    .section-cream { background: var(--cream); }
+
+    /* ── CATALOG SLIDER ── */
+    .slider-wrap {
+      position: relative; max-width: 960px; margin: 0 auto;
+      overflow: hidden; background: var(--white);
+      box-shadow: 0 8px 48px rgba(0,0,0,.09);
+      transition: height .35s cubic-bezier(.4,0,.2,1);
+    }
+    .slider-track {
+      display: flex; align-items: flex-start;
+      transition: transform .45s cubic-bezier(.4,0,.2,1);
+    }
+    .slide {
+      min-width: 100%; display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .slide-img {
+      width: 100%; height: 500px; object-fit: cover; object-position: center bottom; display: block;
+    }
+    .slide-body {
+      padding: 40px 36px;
+      display: flex; flex-direction: column; justify-content: flex-start;
+    }
+    .slide-line { font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--rose); margin-bottom:6px; }
+    .slide-name { font-family:var(--font-serif); font-size:2rem; color:var(--mocha); margin-bottom:12px; line-height:1.15; }
+    .slide-desc { font-size:.88rem; color:var(--gris); line-height:1.8; margin-bottom:20px; }
+    .slide-table { width:100%; border-collapse:collapse; margin-bottom:24px; font-size:.82rem; }
+    .slide-table th { background:var(--cream); color:var(--mocha); text-align:left; padding:7px 10px; font-weight:600; }
+    .slide-table td { padding:6px 10px; border-bottom:1px solid var(--cream-2); color:var(--gris); }
+    .slide-table td:last-child { color:var(--rose); font-weight:600; }
+    .btn-add-cart {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:14px 28px; background:var(--rose); color:var(--white);
+      font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+      border:none; cursor:pointer; border-radius:2px; width:100%;
+      justify-content:center; transition:background .2s, transform .2s;
+    }
+    .btn-add-cart:hover { background:var(--rose-hover); transform:translateY(-2px); }
+
+    /* SLIDER ARROWS */
+    .slider-arrow {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:44px; height:44px; background:var(--white);
+      border:1px solid var(--cream-2); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; z-index:10; transition:all .2s;
+      box-shadow: 0 2px 12px rgba(0,0,0,.1);
+    }
+    .slider-arrow:hover { background:var(--espresso); color:var(--white); border-color:var(--espresso); }
+    .slider-arrow svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; }
+    .arrow-prev { left:-22px; }
+    .arrow-next { right:-22px; }
+
+    /* SLIDER DOTS */
+    .slider-dots { display:flex; justify-content:center; gap:7px; margin-top:24px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--cream-2); cursor:pointer; transition:all .2s; border:none; }
+    .dot.active { background:var(--rose); transform:scale(1.2); }
+
+    /* COUNTER */
+    .slide-counter { text-align:center; margin-top:14px; font-size:.72rem; color:var(--gris); letter-spacing:.1em; }
+
+    /* ── ORDER FORM ── */
+    .order-section {
+      max-width: 840px; margin: 0 auto; padding: 60px 40px;
+      background: var(--white); box-shadow: 0 8px 48px rgba(0,0,0,.07);
+      display: none;
+    }
+    .order-section.visible { display: block; }
+    .order-header { margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--cream-2); }
+    .order-selected-product {
+      display: flex; gap: 18px; align-items: center;
+      background: var(--cream); padding: 16px 18px; border-radius: 2px;
+    }
+    .order-selected-product img { width: 72px; height: 72px; object-fit: cover; border-radius: 2px; }
+    .order-selected-product-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--mocha); }
+    .order-selected-product-price { font-size: .82rem; color: var(--rose); margin-top: 3px; }
+
+    /* FORM FIELDS */
+    .form-section { margin-bottom: 32px; }
+    .form-section-title {
+      font-family: var(--font-serif); font-size: 1.15rem; color: var(--mocha);
+      margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-2);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-section-title span { font-size: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: .72rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--mocha); margin-bottom: 7px;
+    }
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--cream-2); border-radius: 2px;
+      font-family: var(--font-sans); font-size: .9rem; color: var(--espresso);
+      background: var(--cream); transition: border-color .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a7060' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+    .form-group select:focus,
+    .form-group input:focus,
+    .form-group textarea:focus { outline: none; border-color: var(--rose); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    /* PRICE DISPLAY */
+    .price-display {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--cream); padding: 14px 18px; border-radius: 2px;
+      margin-top: 8px; margin-bottom: 16px;
+    }
+    .price-display-label { font-size: .78rem; color: var(--gris); }
+    .price-display-value { font-family: var(--font-serif); font-size: 1.6rem; color: var(--rose); }
+
+    /* DELIVERY TOGGLE */
+    .delivery-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+    .delivery-opt {
+      flex: 1; padding: 13px; text-align: center;
+      border: 1.5px solid var(--cream-2); border-radius: 2px;
+      cursor: pointer; font-size: .8rem; font-weight: 500;
+      color: var(--gris); transition: all .2s; user-select: none;
+    }
+    .delivery-opt.selected { border-color: var(--rose); background: var(--rose-light); color: var(--rose); }
+
+    /* DECORATION CATALOG */
+    .deco-catalog-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border: 1.5px solid var(--cream-2);
+      background: var(--cream); color: var(--mocha); font-size: .78rem;
+      font-weight: 500; letter-spacing: .08em; cursor: pointer;
+      border-radius: 2px; font-family: var(--font-sans);
+      transition: all .2s; margin-bottom: 14px;
+    }
+    .deco-catalog-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+    /* DECORATION MODAL */
+    .deco-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(20,8,4,.7); z-index: 2000;
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .deco-modal.open { display: flex; }
+    .deco-modal-inner {
+      background: var(--white); max-width: 900px; width: 100%;
+      max-height: 90vh; overflow-y: auto; border-radius: 2px;
+      padding: 36px;
+    }
+    .deco-modal-title {
+      font-family: var(--font-serif); font-size: 1.5rem; color: var(--mocha);
+      margin-bottom: 6px;
+    }
+    .deco-modal-sub { font-size: .82rem; color: var(--gris); margin-bottom: 24px; }
+    .deco-pages { display: flex; flex-direction: column; gap: 16px; }
+    .deco-page-img { width: 100%; display: block; border: 1px solid var(--cream-2); }
+    .deco-modal-close {
+      display: block; margin: 24px auto 0;
+      padding: 12px 32px; background: var(--espresso); color: var(--white);
+      border: none; cursor: pointer; font-family: var(--font-sans);
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; border-radius: 2px;
+    }
+
+    /* QR SECTION */
+    .qr-block {
+      background: var(--cream); padding: 24px; text-align: center;
+      border: 1.5px dashed var(--rose-light); border-radius: 2px;
+    }
+    .qr-block-title { font-family: var(--font-serif); font-size: 1rem; color: var(--mocha); margin-bottom: 8px; }
+    .qr-placeholder {
+      width: 160px; height: 160px; margin: 0 auto 12px;
+      background: var(--white); border: 1px solid var(--cream-2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+    }
+    .qr-svg { width: 120px; height: 120px; }
+    .qr-anticipo {
+      font-size: .8rem; color: var(--rose); font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .qr-note { font-size: .75rem; color: var(--gris); font-style: italic; }
+    .btn-download-qr {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 22px; border: 1.5px solid var(--mocha);
+      background: transparent; color: var(--mocha);
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer; border-radius: 2px;
+      font-family: var(--font-sans); transition: all .2s; margin-top: 12px;
+    }
+    .btn-download-qr:hover { background: var(--espresso); color: var(--white); border-color: var(--espresso); }
+
+    /* SEND BUTTON */
+    .btn-send-order {
+      width: 100%; padding: 17px;
+      background: var(--espresso); color: var(--white);
+      font-family: var(--font-sans); font-size: .82rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      border: none; cursor: pointer; border-radius: 2px;
+      transition: background .2s; margin-top: 8px;
+    }
+    .btn-send-order:hover { background: var(--rose); }
+    .send-note {
+      text-align: center; font-size: .75rem; color: var(--gris);
+      margin-top: 10px; font-style: italic;
+    }
+
+    /* CONFIRMATION MODAL */
+    .confirm-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(20,8,4,.75); z-index: 3000;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .confirm-modal.open { display: flex; }
+    .confirm-modal-inner {
+      background: var(--white); max-width: 540px; width: 100%;
+      padding: 44px 40px; border-radius: 2px; text-align: center;
+    }
+    .confirm-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .confirm-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--mocha); margin-bottom: 8px; }
+    .confirm-subtitle { font-size: .9rem; color: var(--gris); margin-bottom: 28px; line-height: 1.7; }
+    .confirm-summary {
+      background: var(--cream); padding: 18px 20px; border-radius: 2px;
+      text-align: left; font-size: .85rem; margin-bottom: 28px; line-height: 2;
+      color: var(--mocha);
+    }
+    .confirm-summary strong { color: var(--espresso); }
+    .confirm-btns { display: flex; gap: 12px; }
+    .btn-review {
+      flex: 1; padding: 13px; border: 1.5px solid var(--cream-2);
+      background: transparent; color: var(--mocha); font-family: var(--font-sans);
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer; border-radius: 2px;
+      transition: all .2s;
+    }
+    .btn-review:hover { border-color: var(--mocha); }
+    .btn-confirm-send {
+      flex: 2; padding: 13px; background: var(--verde-wa);
+      color: var(--white); border: none; font-family: var(--font-sans);
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer; border-radius: 2px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background .2s;
+    }
+    .btn-confirm-send:hover { background: #1ca64a; }
+    .confirm-comprobante {
+      margin-top: 18px; font-size: .76rem; color: var(--gris);
+      font-style: italic; border-top: 1px solid var(--cream-2); padding-top: 14px;
+    }
+
+
+    /* CART ITEMS */
+    .cart-empty { text-align:center; padding:40px 20px; color:var(--gris); }
+    .cart-empty .cart-icon { font-size:2.5rem; margin-bottom:12px; }
+    .cart-empty p { font-size:.9rem; line-height:1.7; }
+
+    .cart-section-hdr {
+      font-family:var(--font-serif); font-size:1.1rem; color:var(--mocha);
+      margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--cream-2);
+      display:flex; align-items:center; gap:10px;
+    }
+    .cart-badge {
+      margin-left:auto; font-family:var(--font-sans);
+      font-size:.68rem; font-weight:600; letter-spacing:.1em;
+      background:var(--rose); color:var(--white);
+      padding:3px 10px; border-radius:20px; text-transform:uppercase;
+    }
+    .cart-item {
+      display:grid; grid-template-columns:80px 1fr;
+      gap:16px; padding:16px 0; border-bottom:1px solid var(--cream-2);
+    }
+    .cart-item-img { width:80px; height:80px; object-fit:cover; border-radius:2px; display:block; }
+    .cart-item-head {
+      display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;
+    }
+    .cart-item-name { font-family:var(--font-serif); font-size:1rem; color:var(--mocha); line-height:1.2; }
+    .cart-item-line { font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:var(--rose); margin-top:3px; }
+    .cart-item-remove {
+      width:26px; height:26px; border-radius:50%;
+      border:1.5px solid var(--cream-2); background:var(--cream);
+      color:var(--gris); font-size:1rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s; flex-shrink:0; line-height:1;
+    }
+    .cart-item-remove:hover { background:#fff0f0; border-color:#c00; color:#c00; }
+    .cart-item-subtotal { font-size:.82rem; color:var(--gris); margin-top:8px; }
+    .cart-item-subtotal strong { color:var(--rose); font-size:.95rem; font-family:var(--font-serif); }
+    .deco-sm-btn {
+      font-size:.65rem; color:var(--rose); background:none; border:none;
+      cursor:pointer; text-decoration:underline; font-family:var(--font-sans);
+      padding:0 4px; letter-spacing:0;
+    }
+    .cart-total-row {
+      margin-top:20px; padding:16px 18px; background:var(--cream);
+      border-radius:2px; display:none;
+    }
+    .cart-total-label { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gris); margin-bottom:4px; }
+    .cart-total-value { font-family:var(--font-serif); font-size:2rem; color:var(--mocha); }
+    .cart-anticipo { font-size:.82rem; color:var(--rose); font-weight:600; margin-top:4px; }
+
+    @media (max-width: 760px) {
+      .slide { grid-template-columns: 1fr; }
+      .slide-img { height: 300px; object-position: center 82%; }
+      .slide-body { padding: 24px 20px; }
+      /* Flechas dentro de la imagen, no sobre el texto */
+      .slider-arrow { top: 140px; transform: none; width: 38px; height: 38px; }
+      .arrow-prev { left: 12px; }
+      .arrow-next { right: 12px; }
+      .order-section { padding: 36px 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .confirm-modal-inner { padding: 32px 20px; }
+      .confirm-btns { flex-direction: column; }
+      .slide-name { font-size: 1.5rem; }
+      .page-hero { min-height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a class="nav-brand" href="index.html">
+    <img src="285654978_4898080570315106_8575377553896454271_n.jpg" alt="Más Deli" />
+    <div><div class="nav-brand-text">Más Deli</div><div class="nav-brand-sub">Dulces Recuerdos</div></div>
+  </a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="historia.html">Nuestra Historia</a></li>
+    <li><a href="productos.html">Productos</a></li>
+    <li><a href="pedidos.html" class="active">Pedidos</a></li>
+    <li class="nav-cta"><a href="contratos.html">Contratos</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="page-breadcrumb"><a href="index.html">Inicio</a> &nbsp;/&nbsp; Pedidos</div>
+    <h1 class="page-title">Realizar <em>Pedido</em></h1>
+  </div>
+</div>
+
+<!-- CATALOG SLIDER -->
+<section class="section section-cream">
+  <div class="container text-center" style="margin-bottom:48px;">
+    <span class="eyebrow">Nuestro Catálogo</span>
+    <h2 class="section-title">Elige tu <em>torta ideal</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+    <p class="section-desc">Desliza para explorar todas nuestras creaciones. Haz click en "Agregar al carrito" para continuar con tu pedido.</p>
+  </div>
+
+  <div style="position:relative; max-width:960px; margin:0 auto;">
+    <div class="slider-wrap">
+      <div class="slider-track" id="sliderTrack">
+
+        <!-- SLIDE 1: Clásica con Manjar -->
+        <div class="slide">
+          <img class="slide-img" src="product_2.jpg" alt="Torta Clásica con Manjar" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Dulce · Torta</div>
+            <div class="slide-name">Torta Clásica con Manjar</div>
+            <p class="slide-desc">Masa de vainilla con chocolate o frutilla, humedecido con manjar. Rellenos de crema, durazno y coco. Cubierta con crema de leche.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>80 Bs</td></tr><tr><td>12 p.</td><td>120 Bs</td></tr>
+              <tr><td>16 p.</td><td>160 Bs</td></tr><tr><td>20 p.</td><td>200 Bs</td></tr>
+              <tr><td>25 p.</td><td>265 Bs</td></tr><tr><td>30 p.</td><td>315 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Clásica con Manjar','dulce',JSON.stringify([[8,80],[10,100],[12,120],[14,140],[16,160],[20,200],[25,265],[30,315]]),'product_2.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 2: 3 Leches -->
+        <div class="slide">
+          <img class="slide-img" src="product_3.jpg" alt="Torta 3 Leches" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Dulce · Torta</div>
+            <div class="slide-name">Torta 3 Leches</div>
+            <p class="slide-desc">Masa de vainilla humedecida con concentrado de 3 leches. Rellenos de crema, durazno y coco. Cubierta con crema de leche.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>112 Bs</td></tr><tr><td>12 p.</td><td>168 Bs</td></tr>
+              <tr><td>16 p.</td><td>224 Bs</td></tr><tr><td>20 p.</td><td>280 Bs</td></tr>
+              <tr><td>25 p.</td><td>365 Bs</td></tr><tr><td>30 p.</td><td>435 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta 3 Leches','dulce',JSON.stringify([[8,112],[10,140],[12,168],[14,196],[16,224],[20,280],[25,365],[30,435]]),'product_3.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 3: Oreo -->
+        <div class="slide">
+          <img class="slide-img" src="product_4.jpg" alt="Torta Oreo" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Dulce · Torta</div>
+            <div class="slide-name">Torta Oreo</div>
+            <p class="slide-desc">Masa de chocolate humedecida con preparado de leches. Ambos rellenos con crema y galletas Oreo. Cubierta con crema de leche.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>100 Bs</td></tr><tr><td>12 p.</td><td>150 Bs</td></tr>
+              <tr><td>16 p.</td><td>200 Bs</td></tr><tr><td>20 p.</td><td>250 Bs</td></tr>
+              <tr><td>25 p.</td><td>327 Bs</td></tr><tr><td>30 p.</td><td>390 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Oreo','dulce',JSON.stringify([[8,100],[10,125],[12,150],[14,175],[16,200],[20,250],[25,327],[30,390]]),'product_4.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 4: Moka -->
+        <div class="slide">
+          <img class="slide-img" src="product_5.jpg" alt="Torta Moka" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Dulce · Torta</div>
+            <div class="slide-name">Torta Moka</div>
+            <p class="slide-desc">Masa de chocolate con leche y café. Rellenos de crema, manjar y chispas de chocolate. Cubierta con crema de leche con café.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>112 Bs</td></tr><tr><td>12 p.</td><td>168 Bs</td></tr>
+              <tr><td>16 p.</td><td>224 Bs</td></tr><tr><td>20 p.</td><td>280 Bs</td></tr>
+              <tr><td>25 p.</td><td>365 Bs</td></tr><tr><td>30 p.</td><td>435 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Moka','dulce',JSON.stringify([[8,112],[10,140],[12,168],[14,196],[16,224],[20,280],[25,365],[30,435]]),'product_5.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 5: Selva Negra -->
+        <div class="slide">
+          <img class="slide-img" src="product_6.jpg" alt="Torta Selva Negra" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Dulce · Torta</div>
+            <div class="slide-name">Torta Selva Negra</div>
+            <p class="slide-desc">Masa intensa de chocolate con almíbar. Rellenos de crema y frutilla. Cubierta con crema de leche y ganache de chocolate.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>120 Bs</td></tr><tr><td>12 p.</td><td>180 Bs</td></tr>
+              <tr><td>16 p.</td><td>240 Bs</td></tr><tr><td>20 p.</td><td>300 Bs</td></tr>
+              <tr><td>25 p.</td><td>390 Bs</td></tr><tr><td>30 p.</td><td>465 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Selva Negra','dulce',JSON.stringify([[8,120],[10,150],[12,180],[14,210],[16,240],[20,300],[25,390],[30,465]]),'product_6.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 6: 3 Leches de Piña -->
+        <div class="slide">
+          <img class="slide-img" src="product_10.jpg" alt="Torta 3 Leches de Piña" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Menos Dulce · Torta</div>
+            <div class="slide-name">Torta 3 Leches de Piña</div>
+            <p class="slide-desc">Masa de vainilla con concentrado de 3 leches sabor piña. Rellenos de crema y piña. Cubierta con crema de leche.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>112 Bs</td></tr><tr><td>12 p.</td><td>168 Bs</td></tr>
+              <tr><td>16 p.</td><td>224 Bs</td></tr><tr><td>20 p.</td><td>280 Bs</td></tr>
+              <tr><td>25 p.</td><td>365 Bs</td></tr><tr><td>30 p.</td><td>435 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta 3 Leches de Piña','menos-dulce',JSON.stringify([[8,112],[10,140],[12,168],[14,196],[16,224],[20,280],[25,365],[30,435]]),'product_10.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 7: Mocachino -->
+        <div class="slide">
+          <img class="slide-img" src="product_11.jpg" alt="Torta Mocachino" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Menos Dulce · Torta</div>
+            <div class="slide-name">Torta Mocachino</div>
+            <p class="slide-desc">Masa de vainilla con leche y café. Rellenos de crema, manjar y duraznos. Cubierta con crema de leche con café.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>96 Bs</td></tr><tr><td>10 p.</td><td>120 Bs</td></tr>
+              <tr><td>12 p.</td><td>144 Bs</td></tr><tr><td>16 p.</td><td>192 Bs</td></tr>
+              <tr><td>20 p.</td><td>240 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Mocachino','menos-dulce',JSON.stringify([[8,96],[10,120],[12,144],[14,168],[16,192],[20,240]]),'product_11.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 8: Arcoíris -->
+        <div class="slide">
+          <img class="slide-img" src="product_12.jpg" alt="Torta Arcoíris" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Menos Dulce · Torta</div>
+            <div class="slide-name">Torta Arcoíris</div>
+            <p class="slide-desc">Masa tricolor con leche. Primer relleno: crema con chispas de chocolate. Segundo relleno: crema con marshmallows y gelatina.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>96 Bs</td></tr><tr><td>10 p.</td><td>120 Bs</td></tr>
+              <tr><td>12 p.</td><td>144 Bs</td></tr><tr><td>16 p.</td><td>192 Bs</td></tr>
+              <tr><td>20 p.</td><td>240 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Arcoíris','menos-dulce',JSON.stringify([[8,96],[10,120],[12,144],[14,168],[16,192],[20,240]]),'product_12.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 9: Clásica con Leche -->
+        <div class="slide">
+          <img class="slide-img" src="product_13.jpg" alt="Torta Clásica con Leche" />
+          <div class="slide-body">
+            <div class="slide-line">Línea Menos Dulce · Torta</div>
+            <div class="slide-name">Torta Clásica con Leche</div>
+            <p class="slide-desc">Masa de vainilla o frutilla o chocolate, humedecida con leche. Rellenos de crema, durazno, coco, manjar y chispas de chocolate.</p>
+            <table class="slide-table"><thead><tr><th>Porciones</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 p.</td><td>80 Bs</td></tr><tr><td>12 p.</td><td>120 Bs</td></tr>
+              <tr><td>16 p.</td><td>160 Bs</td></tr><tr><td>20 p.</td><td>200 Bs</td></tr>
+              <tr><td>25 p.</td><td>265 Bs</td></tr><tr><td>30 p.</td><td>315 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Torta Clásica con Leche','menos-dulce',JSON.stringify([[8,80],[10,100],[12,120],[14,140],[16,160],[20,200],[25,265],[30,315]]),'product_13.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 10: Postre Selva Negra -->
+        <div class="slide">
+          <img class="slide-img" src="product_7.jpg" alt="Postre Selva Negra" />
+          <div class="slide-body">
+            <div class="slide-line">Postre · 8 porciones fijas</div>
+            <div class="slide-name">Postre Selva Negra</div>
+            <p class="slide-desc">Intensa masa de chocolate con almíbar, cubierto con ganache de chocolate y decorado con frutillas.</p>
+            <table class="slide-table"><thead><tr><th>Tamaño</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 porciones</td><td>120 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Postre Selva Negra','postre',JSON.stringify([[8,120]]),'product_7.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 11: Postre 3 Leches -->
+        <div class="slide">
+          <img class="slide-img" src="product_8.jpg" alt="Postre 3 Leches" />
+          <div class="slide-body">
+            <div class="slide-line">Postre · 8 porciones fijas</div>
+            <div class="slide-name">Postre 3 Leches</div>
+            <p class="slide-desc">Masa de vainilla humedecida con concentrado de 3 leches, decorado con frutas frescas.</p>
+            <table class="slide-table"><thead><tr><th>Tamaño</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 porciones</td><td>140 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Postre 3 Leches','postre',JSON.stringify([[8,140]]),'product_8.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 12: Postre Pie de Limón -->
+        <div class="slide">
+          <img class="slide-img" src="product_9.jpg" alt="Postre Pie de Limón" />
+          <div class="slide-body">
+            <div class="slide-line">Postre · 8 porciones fijas</div>
+            <div class="slide-name">Postre Pie de Limón</div>
+            <p class="slide-desc">Masa quebrada rellena con crema de limón, decorada con crema de leche y rodajas de limón fresco.</p>
+            <table class="slide-table"><thead><tr><th>Tamaño</th><th>Precio</th></tr></thead><tbody>
+              <tr><td>8 porciones</td><td>100 Bs</td></tr>
+            </tbody></table>
+            <button class="btn-add-cart" onclick="addToCart('Postre Pie de Limón','postre',JSON.stringify([[8,100]]),'product_9.jpg')">
+              ＋ Agregar al carrito
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /slider-track -->
+    </div><!-- /slider-wrap -->
+
+    <button class="slider-arrow arrow-prev" onclick="changeSlide(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="slider-arrow arrow-next" onclick="changeSlide(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="slider-dots" id="sliderDots"></div>
+  <div class="slide-counter" id="slideCounter">1 / 12</div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="section section-white" id="orderSection">
+  <div class="container text-center" style="margin-bottom:40px;">
+    <span class="eyebrow">Formulario de Pedido</span>
+    <h2 class="section-title">Personaliza tu <em>pedido</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+  </div>
+
+  <div class="order-section" id="orderForm">
+    <!-- 1. CARRITO -->
+    <div class="form-section">
+      <div class="cart-section-hdr">
+        <span>🛒</span> Tortas seleccionadas
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
+      <div id="cartItems"></div>
+      <div class="cart-total-row" id="cartTotalRow">
+        <div class="cart-total-label">Total estimado</div>
+        <div class="cart-total-value" id="cartTotal">— Bs</div>
+        <div class="cart-anticipo">Anticipo (50%): <strong id="cartAnticipo">— Bs</strong></div>
+      </div>
+    </div>
+
+    <!-- 3. Entrega -->
+    <div class="form-section">
+      <div class="form-section-title"><span>🚗</span> Tipo de entrega</div>
+      <div class="delivery-toggle">
+        <div class="delivery-opt selected" id="optRecojo" onclick="selectDelivery('recojo')">
+          🏪 Recojo en local
+        </div>
+        <div class="delivery-opt" id="optEnvio" onclick="selectDelivery('envio')">
+          🛵 Envío a domicilio
+        </div>
+      </div>
+      <div id="addressGroup" class="form-group" style="display:none;">
+        <label for="direccion">Dirección de entrega</label>
+        <input type="text" id="direccion" placeholder="Ej: Av. Américas #123, zona norte, Sucre" />
+      </div>
+    </div>
+
+    <!-- 4. QR y anticipo -->
+    <div class="form-section">
+      <div class="form-section-title"><span>💳</span> Anticipo de pago</div>
+      <div class="qr-block">
+        <div class="qr-block-title">Código QR de pago</div>
+        <div class="qr-placeholder">
+          <!-- QR placeholder SVG -->
+          <svg class="qr-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="120" height="120" fill="white"/>
+            <!-- QR pattern placeholder -->
+            <rect x="10" y="10" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
+            <rect x="14" y="14" width="32" height="32" rx="1" fill="white"/>
+            <rect x="18" y="18" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
+            <rect x="70" y="10" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
+            <rect x="74" y="14" width="32" height="32" rx="1" fill="white"/>
+            <rect x="78" y="18" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
+            <rect x="10" y="70" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
+            <rect x="14" y="74" width="32" height="32" rx="1" fill="white"/>
+            <rect x="18" y="78" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
+            <rect x="55" y="55" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="65" y="55" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="75" y="55" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="55" y="65" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="65" y="65" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="75" y="65" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="85" y="65" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="85" y="55" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="55" y="75" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="65" y="75" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="85" y="75" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="55" y="85" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <rect x="65" y="85" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="75" y="85" width="8" height="8" fill="#1e0f09" opacity=".7"/>
+            <rect x="85" y="85" width="8" height="8" fill="#1e0f09" opacity=".4"/>
+            <text x="60" y="115" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c4748a">Más Deli</text>
+          </svg>
+        </div>
+        <div class="qr-anticipo">⚠️ Se requiere 50% de anticipo para confirmar el pedido</div>
+        <div class="qr-note">Reemplaza esta imagen con tu QR de pago real (Tigo Money, banco, etc.)</div>
+        <button class="btn-download-qr" onclick="downloadQR()">⬇ Descargar QR</button>
+      </div>
+    </div>
+
+    <!-- 5. Enviar -->
+    <div class="form-section">
+      <button class="btn-send-order" onclick="openConfirmModal()">
+        Enviar Pedido por WhatsApp
+      </button>
+      <p class="send-note">Recuerda enviar el comprobante de pago del anticipo para confirmar tu pedido</p>
+    </div>
+  </div>
+
+  <!-- Placeholder when cart is empty -->
+  <div id="orderPlaceholder" class="text-center" style="padding:60px 0; color:var(--gris);">
+    <div style="font-size:3rem; margin-bottom:16px;">🎂</div>
+    <p style="font-family:var(--font-serif); font-size:1.3rem; color:var(--mocha); margin-bottom:8px;">Elige una torta del catálogo</p>
+    <p style="font-size:.9rem;">Haz click en <strong>"+ Agregar al carrito"</strong> para armar tu pedido.</p>
+  </div>
+</section>
+
+<!-- DECORATION MODAL -->
+<div class="deco-modal" id="decoModal" onclick="closeDecoModalOutside(event)">
+  <div class="deco-modal-inner">
+    <div class="deco-modal-title">Catálogo de Decorados</div>
+    <div class="deco-modal-sub">Encuentra el código de tu decorado favorito y selecciónalo en el formulario.</div>
+    <div class="deco-pages">
+      <img class="deco-page-img" src="decorado_1.jpg" alt="Decorados B01-B06" />
+      <img class="deco-page-img" src="decorado_2.jpg" alt="Decorados B07-B12" />
+      <img class="deco-page-img" src="decorado_3.jpg" alt="Decorados C01-C06" />
+      <img class="deco-page-img" src="decorado_4.jpg" alt="Decorados C07-C12" />
+      <img class="deco-page-img" src="decorado_5.jpg" alt="Decorados C13-C18" />
+    </div>
+    <button class="deco-modal-close" onclick="closeDecoModal()">Cerrar catálogo</button>
+  </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="confirm-modal" id="confirmModal">
+  <div class="confirm-modal-inner">
+    <div class="confirm-icon">🎂</div>
+    <div class="confirm-title">¿Confirmas tu pedido?</div>
+    <div class="confirm-subtitle">Revisa los detalles antes de enviar. Una vez confirmado, te contactaremos por WhatsApp.</div>
+    <div class="confirm-summary" id="confirmSummary"></div>
+    <div class="confirm-btns">
+      <button class="btn-review" onclick="closeConfirmModal()">← Revisar pedido</button>
+      <button class="btn-confirm-send" onclick="sendOrder()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Confirmar y Enviar
+      </button>
+    </div>
+    <div class="confirm-comprobante">
+      📎 Recuerda enviar el comprobante de pago del anticipo (50%) al confirmar tu pedido.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">Más Deli</div>
+      <div class="logo-sub">— Dulces Recuerdos —</div>
+      <p>Pastelería artesanal en Sucre, Bolivia.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="pedidos.html">Pedidos</a></li>
+        <li><a href="contratos.html">Contratos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Sucursales</h4>
+      <p>Sucursal Américas · +591 786 60109</p><br/>
+      <p>Sucursal Pando · +591 754 51278</p><br/>
+      <p>Central & Fábrica · +591 744 05636</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Más Deli – Pastelería · Sucre, Bolivia</span>
+    <span class="footer-instagram"><a href="https://www.instagram.com/masdeli.pasteleria/" target="_blank">@masdeli.pasteleria</a></span>
+  </div>
+</footer>
+
+<a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Quiero%20hacer%20un%20pedido%20🎂" target="_blank" class="wa-float">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // ── NAVBAR ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+  function toggleMenu() { document.getElementById('navMenu').classList.toggle('open'); }
+  document.querySelectorAll('.nav-menu a').forEach(a => a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open')));
+
+  // ── SLIDER ──
+  const track = document.getElementById('sliderTrack');
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let current = 0;
+
+  // Build dots
+  const dotsContainer = document.getElementById('sliderDots');
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  const sliderWrap = document.querySelector('.slider-wrap');
+  function updateSliderHeight() {
+    sliderWrap.style.height = slides[current].offsetHeight + 'px';
+  }
+
+  function goToSlide(idx) {
+    current = (idx + totalSlides) % totalSlides;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    document.getElementById('slideCounter').textContent = `${current + 1} / ${totalSlides}`;
+    updateSliderHeight();
+  }
+  function changeSlide(dir) { goToSlide(current + dir); }
+
+  updateSliderHeight();
+  window.addEventListener('resize', updateSliderHeight);
+
+  // Touch/swipe support
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) changeSlide(diff > 0 ? 1 : -1);
+  });
+
+  // ── MULTI-CART STATE ──
+  let cart = [];
+  let nextId = 0;
+  let deliveryType = 'recojo';
+
+  function decoOptionsHTML() {
+    return `
+      <option value="">— Sin decorado especial —</option>
+      <optgroup label="Serie B – Clásicos (sin costo extra)">
+        <option value="B01">B01 – Rayas horizontales</option>
+        <option value="B02">B02 – Rayas verticales</option>
+        <option value="B03">B03 – Cuadrícula</option>
+        <option value="B04">B04 – Ondas</option>
+        <option value="B05">B05 – Puntos</option>
+        <option value="B06">B06 – Flores (+ 0.50 Bs/porción)</option>
+        <option value="B07">B07 – Corazones</option>
+        <option value="B08">B08 – Estrellas</option>
+        <option value="B09">B09 – Espiral</option>
+        <option value="B10">B10 – Mármol</option>
+        <option value="B11">B11 – Ombre</option>
+        <option value="B12">B12 – Encaje (+ 0.50 Bs/porción)</option>
+      </optgroup>
+      <optgroup label="Serie C – Premium (+ 1 Bs/porción)">
+        <option value="C01">C01 – Flores fondant</option>
+        <option value="C02">C02 – Rosas naturales (+ 0.50 Bs/porción)</option>
+        <option value="C03">C03 – Personaje fondant</option>
+        <option value="C04">C04 – Mariposas (+ 0.50 Bs/porción)</option>
+        <option value="C05">C05 – Números 3D</option>
+        <option value="C06">C06 – Fotografía comestible</option>
+        <option value="C07">C07 – Geoda de cristal (+ 1 Bs/porción)</option>
+        <option value="C08">C08 – Espejo dorado (+ 1 Bs/porción)</option>
+        <option value="C09">C09 – Acuarela artística (+ 1 Bs/porción)</option>
+        <option value="C10">C10 – Degradé metálico</option>
+        <option value="C11">C11 – Half & half</option>
+        <option value="C12">C12 – Bosque mágico</option>
+        <option value="C13">C13 – Galaxia</option>
+        <option value="C14">C14 – Drip cake (+ 1 Bs/porción)</option>
+        <option value="C15">C15 – Naked cake floral (+ 1 Bs/porción)</option>
+        <option value="C16">C16 – Buttercream textura (+ 1 Bs/porción)</option>
+        <option value="C17">C17 – Vintage encaje (+ 1 Bs/porción)</option>
+        <option value="C18">C18 – Escultura fondant (+ 1 Bs/porción)</option>
+      </optgroup>
+    `;
+  }
+
+  function getDecoExtra(code, porciones) {
+    const c1 = ['B06','B12','C02','C04'];
+    const c2 = ['C07','C08','C09','C14','C15','C16','C17','C18'];
+    if (c2.includes(code)) return porciones * 1;
+    if (c1.includes(code)) return porciones * 0.5;
+    return 0;
+  }
+
+  function addToCart(name, line, pricesJson, img) {
+    const id = nextId++;
+    const prices = JSON.parse(pricesJson);
+    cart.push({ id, name, line, img, prices, porciones: null, precio: null, decoCode: '', subtotal: null, dedicatoria: '' });
+    renderCart();
+    showOrderForm();
+    setTimeout(() => {
+      document.getElementById('orderSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    renderCart();
+    if (cart.length === 0) hideOrderForm();
+  }
+
+  function renderCart() {
+    // Persist dedicatoria text before wiping DOM
+    cart.forEach(item => {
+      const el = document.getElementById(`dedi-${item.id}`);
+      if (el) item.dedicatoria = el.value;
+    });
+
+    const container = document.getElementById('cartItems');
+    const badge = document.getElementById('cartBadge');
+    badge.textContent = cart.length;
+
+    if (cart.length === 0) {
+      container.innerHTML = '';
+      document.getElementById('cartTotalRow').style.display = 'none';
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item" id="ci-${item.id}">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}" />
+        <div>
+          <div class="cart-item-head">
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-line">${item.line}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Eliminar">×</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Porciones</label>
+              <select id="porc-${item.id}" onchange="updateCartItemPrice(${item.id})">
+                <option value="">— Selecciona —</option>
+                ${item.prices.map(([p, price]) => `<option value="${JSON.stringify([p,price])}"${item.porciones === p ? ' selected' : ''}>${p} porciones – ${price} Bs</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Decorado <button type="button" class="deco-sm-btn" onclick="openDecoModal()">📖 ver catálogo</button></label>
+              <select id="deco-${item.id}" onchange="updateCartItemPrice(${item.id})">
+                ${decoOptionsHTML()}
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:8px;">
+            <label>Dedicatoria (opcional)</label>
+            <textarea id="dedi-${item.id}" rows="2" placeholder="Ej: ¡Feliz cumpleaños! Con cariño..." style="resize:vertical;">${item.dedicatoria || ''}</textarea>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Restore selected deco values after re-render
+    cart.forEach(item => {
+      if (item.decoCode) {
+        const decoSel = document.getElementById(`deco-${item.id}`);
+        if (decoSel) decoSel.value = item.decoCode;
+      }
+    });
+
+    updateTotal();
+  }
+
+  function updateCartItemPrice(id) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+
+    const porcSel = document.getElementById(`porc-${id}`);
+    const decoSel = document.getElementById(`deco-${id}`);
+    item.decoCode = decoSel.value;
+
+    if (!porcSel.value) {
+      item.porciones = null; item.precio = null; item.subtotal = null;
+      updateTotal();
+      return;
+    }
+
+    const [porc, precio] = JSON.parse(porcSel.value);
+    const decoExtra = getDecoExtra(item.decoCode, porc);
+    const subtotal = precio + decoExtra;
+    item.porciones = porc;
+    item.precio = precio;
+    item.subtotal = subtotal;
+
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const totalRow = document.getElementById('cartTotalRow');
+    const priced = cart.filter(i => i.subtotal !== null);
+    if (priced.length === 0) { totalRow.style.display = 'none'; return; }
+
+    const total = priced.reduce((s, i) => s + i.subtotal, 0);
+    const anticipo = Math.ceil(total / 2);
+    document.getElementById('cartTotal').textContent = total + ' Bs';
+    document.getElementById('cartAnticipo').textContent = anticipo + ' Bs';
+    totalRow.style.display = 'block';
+  }
+
+  function showOrderForm() {
+    document.getElementById('orderForm').classList.add('visible');
+    document.getElementById('orderPlaceholder').style.display = 'none';
+  }
+
+  function hideOrderForm() {
+    document.getElementById('orderForm').classList.remove('visible');
+    document.getElementById('orderPlaceholder').style.display = 'block';
+  }
+
+  // Delivery
+  function selectDelivery(type) {
+    deliveryType = type;
+    document.getElementById('optRecojo').classList.toggle('selected', type === 'recojo');
+    document.getElementById('optEnvio').classList.toggle('selected', type === 'envio');
+    document.getElementById('addressGroup').style.display = type === 'envio' ? 'block' : 'none';
+  }
+
+  // ── DECORATION MODAL ──
+  function openDecoModal() { document.getElementById('decoModal').classList.add('open'); }
+  function closeDecoModal() { document.getElementById('decoModal').classList.remove('open'); }
+  function closeDecoModalOutside(e) { if (e.target === document.getElementById('decoModal')) closeDecoModal(); }
+
+  // ── QR DOWNLOAD ──
+  function downloadQR() {
+    const svg = document.querySelector('.qr-svg');
+    const data = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'masdeli-qr-pago.svg';
+    a.click();
+  }
+
+  // ── CONFIRM MODAL ──
+  function openConfirmModal() {
+    if (cart.length === 0) { alert('Agrega al menos una torta al carrito.'); return; }
+    const incomplete = cart.find(i => !i.porciones);
+    if (incomplete) { alert(`Selecciona las porciones para: ${incomplete.name}`); return; }
+
+    // Flush dedicatoria values from DOM
+    cart.forEach(item => {
+      const el = document.getElementById(`dedi-${item.id}`);
+      if (el) item.dedicatoria = el.value.trim();
+    });
+
+    const total = cart.reduce((s, i) => s + i.subtotal, 0);
+    const anticipo = Math.ceil(total / 2);
+    const direccion = document.getElementById('direccion').value.trim();
+    const entrega = deliveryType === 'recojo' ? 'Recojo en local' : `Envío a domicilio${direccion ? ': ' + direccion : ''}`;
+
+    const itemRows = cart.map((item, i) => `
+      <strong>${i+1}. ${item.name}</strong><br>
+      &nbsp;&nbsp;${item.porciones} porc. · Decorado: ${item.decoCode || 'básico'} · ${item.subtotal} Bs
+      ${item.dedicatoria ? `<br>&nbsp;&nbsp;<em>"${item.dedicatoria}"</em>` : ''}
+    `).join('<br>');
+
+    document.getElementById('confirmSummary').innerHTML = `
+      ${itemRows}<br>
+      <strong>Total:</strong> ${total} Bs<br>
+      <strong>Anticipo (50%):</strong> ${anticipo} Bs<br>
+      <strong>Entrega:</strong> ${entrega}
+    `;
+    document.getElementById('confirmModal').classList.add('open');
+  }
+
+  function closeConfirmModal() { document.getElementById('confirmModal').classList.remove('open'); }
+
+  function sendOrder() {
+    const total = cart.reduce((s, i) => s + i.subtotal, 0);
+    const anticipo = Math.ceil(total / 2);
+    const direccion = document.getElementById('direccion').value.trim();
+    const entrega = deliveryType === 'recojo' ? 'Recojo en local' : `Envío a domicilio: ${direccion}`;
+
+    // Flush dedicatoria values from DOM
+    cart.forEach(item => {
+      const el = document.getElementById(`dedi-${item.id}`);
+      if (el) item.dedicatoria = el.value.trim();
+    });
+
+    const itemsText = cart.map((item, i) => {
+      let line = `${i+1}. ${item.name} (${item.porciones} porciones, decorado ${item.decoCode || 'básico'}) – ${item.subtotal} Bs`;
+      if (item.dedicatoria) line += `\n   📝 "${item.dedicatoria}"`;
+      return line;
+    }).join('\n');
+
+    const msg = `🎂 *PEDIDO - MÁS DELI*\n\n*TORTAS:*\n${itemsText}\n\n*Total estimado:* ${total} Bs\n*Anticipo (50%):* ${anticipo} Bs\n*Entrega:* ${entrega}\n\n_Por favor envía el comprobante de pago del anticipo para confirmar tu pedido._ 📎`;
+
+    window.open(`https://wa.me/59178660109?text=${encodeURIComponent(msg)}`, '_blank');
+    closeConfirmModal();
+  }
+
+  // ── DEEP LINK: ?p=N ──
+  (function () {
+    const p = new URLSearchParams(location.search).get('p');
+    if (p !== null) {
+      const idx = parseInt(p, 10);
+      if (!isNaN(idx) && idx >= 0 && idx < totalSlides) {
+        goToSlide(idx);
+        setTimeout(() => {
+          document.querySelector('.slider-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+      }
+    }
+  })();
+
+  // Reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting) en.target.classList.add('visible'); }), { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+<script src="scroll.js"></script>
+</body>
+</html>

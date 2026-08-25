@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contratos & Sucursales – Más Deli Pastelería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero { height: 44vh; min-height: 300px; position:relative; display:flex; align-items:flex-end; padding-bottom:52px; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; background: url('post_5.jpg') center 40%/cover no-repeat; }
+    .page-hero-overlay { position:absolute; inset:0; background: linear-gradient(to bottom, rgba(20,8,4,.4) 0%, rgba(20,8,4,.78) 100%); }
+    .page-hero-content { position:relative; z-index:2; padding:0 5%; }
+    .page-breadcrumb { font-size:.65rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:10px; }
+    .page-breadcrumb a { color:rgba(255,255,255,.5); text-decoration:none; }
+    .page-title { font-family:var(--font-serif); font-weight:300; font-size:clamp(2.4rem,6vw,4.8rem); color:var(--white); line-height:1.1; }
+    .page-title em { font-style:italic; }
+
+    .section { padding: 80px 5%; }
+    .section-white { background: var(--white); }
+    .section-cream { background: var(--cream); }
+
+    /* ── BRANCHES ── */
+    .branches-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; max-width: 1100px; margin: 0 auto 64px;
+    }
+    .branch-card {
+      background: var(--cream); border: 1.5px solid rgba(196,116,138,.12);
+      padding: 36px 28px; text-align: center;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .branch-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--rose-light);
+      transition: background .3s;
+    }
+    .branch-card:hover { border-color: var(--rose); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(196,116,138,.14); }
+    .branch-card:hover::before { background: var(--rose); }
+
+    .branch-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--rose-light); display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; margin: 0 auto 18px;
+    }
+    .branch-name { font-family: var(--font-serif); font-size: 1.3rem; color: var(--mocha); margin-bottom: 6px; }
+    .branch-zona { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gris); margin-bottom: 14px; }
+    .branch-phone {
+      font-family: var(--font-serif); font-size: 1.1rem; color: var(--espresso);
+      margin-bottom: 20px; letter-spacing: .03em;
+    }
+    .branch-btns { display: flex; flex-direction: column; gap: 10px; }
+    .btn-wa-branch {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px; background: var(--verde-wa); color: var(--white);
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: background .2s;
+    }
+    .btn-wa-branch:hover { background: #1ca64a; }
+    .btn-maps-branch {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px; background: var(--white); color: #1a73e8;
+      border: 1.5px solid #1a73e8; font-size: .78rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all .2s;
+    }
+    .btn-maps-branch:hover { background: #1a73e8; color: var(--white); }
+
+    /* ── HORARIO ── */
+    .horario-wrap {
+      max-width: 680px; margin: 0 auto;
+      background: var(--espresso); padding: 52px 48px; color: var(--white); text-align: center;
+    }
+    .horario-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
+    .horario-sub { color: rgba(255,255,255,.5); font-size: .85rem; margin-bottom: 36px; }
+    .horario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .horario-item {
+      background: rgba(255,255,255,.07); padding: 18px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .horario-day { font-weight: 500; font-size: .88rem; }
+    .horario-time { font-size: .83rem; color: var(--rose-light); }
+    .horario-closed {
+      background: rgba(255,255,255,.04); padding: 14px 20px;
+      text-align: center; font-size: .8rem; color: rgba(255,255,255,.35);
+      font-style: italic;
+    }
+
+    /* ── CONTRATO INFO ── */
+    .contrato-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; max-width: 1000px; margin: 0 auto;
+    }
+    .contrato-card {
+      background: var(--white); padding: 36px 32px;
+      border-left: 3px solid var(--rose-light);
+    }
+    .contrato-card h3 { font-family: var(--font-serif); font-size: 1.2rem; color: var(--mocha); margin-bottom: 18px; }
+    .contrato-list { list-style: none; }
+    .contrato-list li {
+      padding: 10px 0; border-bottom: 1px solid var(--cream-2);
+      font-size: .87rem; color: var(--gris); display: flex;
+      align-items: flex-start; gap: 10px; line-height: 1.6;
+    }
+    .contrato-list li:last-child { border-bottom: none; }
+    .contrato-list li::before { content: '✦'; color: var(--rose); font-size: .6rem; flex-shrink: 0; margin-top: 5px; }
+
+    /* ── EVENT FORM ── */
+    .event-form-wrap {
+      max-width: 740px; margin: 0 auto;
+      background: var(--white); padding: 52px 48px;
+      box-shadow: 0 8px 48px rgba(0,0,0,.07);
+    }
+    .event-form-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--mocha); margin-bottom: 6px; }
+    .event-form-sub { font-size: .88rem; color: var(--gris); margin-bottom: 32px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display:block; font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--mocha); margin-bottom:7px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width:100%; padding:12px 14px;
+      border:1.5px solid var(--cream-2); border-radius:2px;
+      font-family:var(--font-sans); font-size:.9rem; color:var(--espresso);
+      background:var(--cream); transition:border-color .2s;
+      appearance:none; -webkit-appearance:none;
+    }
+    .form-group select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a7060' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline:none; border-color:var(--rose); background:var(--white); }
+    .form-group textarea { resize:vertical; min-height:100px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .btn-send-event {
+      width:100%; padding:16px; background:var(--espresso); color:var(--white);
+      font-family:var(--font-sans); font-size:.8rem; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase; border:none;
+      cursor:pointer; border-radius:2px; transition:background .2s; margin-top:8px;
+    }
+    .btn-send-event:hover { background:var(--rose); }
+    .event-note { text-align:center; font-size:.75rem; color:var(--gris); margin-top:10px; font-style:italic; }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--cream-2); }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      padding: 20px 0; font-family: var(--font-serif); font-size: 1.1rem;
+      color: var(--mocha); cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--rose); }
+    .faq-q .arrow { transition: transform .3s; font-size: .8rem; }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 0 20px;
+      font-size: .9rem; color: var(--gris); line-height: 1.8;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    @media (max-width: 900px) {
+      .branches-grid { grid-template-columns: 1fr; max-width: 420px; }
+      .horario-grid { grid-template-columns: 1fr; }
+      .contrato-grid { grid-template-columns: 1fr; gap: 24px; }
+      .event-form-wrap { padding: 36px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .horario-wrap { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<nav class="navbar" id="navbar">
+  <a class="nav-brand" href="index.html">
+    <img src="285654978_4898080570315106_8575377553896454271_n.jpg" alt="Más Deli" />
+    <div><div class="nav-brand-text">Más Deli</div><div class="nav-brand-sub">Dulces Recuerdos</div></div>
+  </a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="historia.html">Nuestra Historia</a></li>
+    <li><a href="productos.html">Productos</a></li>
+    <li><a href="pedidos.html">Pedidos</a></li>
+    <li class="nav-cta"><a href="contratos.html" class="active">Contratos</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="page-breadcrumb"><a href="index.html">Inicio</a> &nbsp;/&nbsp; Contratos</div>
+    <h1 class="page-title">Contratos & <em>Sucursales</em></h1>
+  </div>
+</div>
+
+<!-- BRANCHES -->
+<section class="section section-cream reveal">
+  <div class="container text-center" style="margin-bottom:52px;">
+    <span class="eyebrow">Encuéntranos</span>
+    <h2 class="section-title">Nuestras <em>Sucursales</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+    <p class="section-desc">3 puntos de atención en Sucre, Bolivia. Escríbenos por WhatsApp desde la sucursal más cercana.</p>
+  </div>
+  <div class="branches-grid">
+
+    <div class="branch-card reveal">
+      <div class="branch-icon">🏪</div>
+      <div class="branch-name">Sucursal Américas</div>
+      <div class="branch-zona">Zona Américas · Sucre</div>
+      <div class="branch-phone">+591 786 60109</div>
+      <div class="branch-btns">
+        <a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Sucursal%20Américas%20🎂%20Quiero%20información%20sobre%20contratos." target="_blank" class="btn-wa-branch">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://maps.app.goo.gl/FKigDEUhJN9FrKFN7" target="_blank" class="btn-maps-branch">📍 Cómo llegar</a>
+      </div>
+    </div>
+
+    <div class="branch-card reveal">
+      <div class="branch-icon">🏬</div>
+      <div class="branch-name">Sucursal Pando</div>
+      <div class="branch-zona">Zona Pando · Sucre</div>
+      <div class="branch-phone">+591 754 51278</div>
+      <div class="branch-btns">
+        <a href="https://wa.me/59175451278?text=Hola%20Más%20Deli!%20Sucursal%20Pando%20🎂%20Quiero%20información%20sobre%20contratos." target="_blank" class="btn-wa-branch">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://maps.app.goo.gl/E8avvoqQSJZhkdeMA" target="_blank" class="btn-maps-branch">📍 Cómo llegar</a>
+      </div>
+    </div>
+
+    <div class="branch-card reveal">
+      <div class="branch-icon">🏭</div>
+      <div class="branch-name">Central & Fábrica</div>
+      <div class="branch-zona">Sede Central · Sucre</div>
+      <div class="branch-phone">+591 744 05636</div>
+      <div class="branch-btns">
+        <a href="https://wa.me/59174405636?text=Hola%20Más%20Deli!%20Central%20🎂%20Quiero%20información%20sobre%20contratos." target="_blank" class="btn-wa-branch">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://maps.app.goo.gl/6FdQCtPUTL4xo8tN9" target="_blank" class="btn-maps-branch">📍 Cómo llegar</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HORARIO -->
+  <div class="horario-wrap reveal">
+    <div class="horario-title">Horario de Atención</div>
+    <div class="horario-sub">Estamos en Sucre, Bolivia, listos para endulzar tu día</div>
+    <div class="horario-grid">
+      <div class="horario-item">
+        <span class="horario-day">Lunes a Viernes</span>
+        <span class="horario-time">8:00 am – 8:00 pm</span>
+      </div>
+      <div class="horario-item">
+        <span class="horario-day">Sábados</span>
+        <span class="horario-time">8:00 am – 6:00 pm</span>
+      </div>
+    </div>
+    <div class="horario-closed">Los domingos y feriados descansamos para volver con más energía el lunes 🌿</div>
+  </div>
+</section>
+
+<!-- CONTRATO INFO -->
+<section class="section section-white reveal">
+  <div class="container text-center" style="margin-bottom:52px;">
+    <span class="eyebrow">Información de Contratos</span>
+    <h2 class="section-title">¿Cómo funciona un <em>contrato de evento</em>?</h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+  </div>
+  <div class="contrato-grid">
+    <div class="contrato-card reveal">
+      <h3>📋 ¿Qué incluye?</h3>
+      <ul class="contrato-list">
+        <li>Diseño acordado y aprobado por el cliente antes de la elaboración</li>
+        <li>Fecha y horario de entrega confirmados por escrito</li>
+        <li>Presupuesto detallado con todos los costos incluidos</li>
+        <li>Forma y cronograma de pago acordado</li>
+        <li>Opción de ajustes de diseño dentro del plazo establecido</li>
+        <li>Coordinación de entrega: recojo en local o envío a domicilio</li>
+        <li>Acompañamiento durante todo el proceso del pedido</li>
+      </ul>
+    </div>
+    <div class="contrato-card reveal">
+      <h3>⚠️ Condiciones importantes</h3>
+      <ul class="contrato-list">
+        <li><strong>Anticipo del 50%</strong> para reservar la fecha y confirmar el pedido</li>
+        <li>Pedidos simples: mínimo <strong>5 días de anticipación</strong></li>
+        <li>Bodas y eventos grandes: <strong>3 a 4 semanas</strong> de anticipación</li>
+        <li>Cambios de diseño: comunicar con al menos 48 horas de anticipación</li>
+        <li>Cancelaciones: el anticipo no es reembolsable con menos de 72 horas</li>
+        <li>El saldo restante se cancela al momento de la entrega</li>
+        <li>Se entrega comprobante de pago y confirmación del pedido</li>
+      </ul>
+    </div>
+    <div class="contrato-card reveal">
+      <h3>🎉 Tipos de eventos</h3>
+      <ul class="contrato-list">
+        <li>Bodas y matrimonios — tortas de varios pisos</li>
+        <li>Cumpleaños y baby showers</li>
+        <li>Día de la Madre, Día del Padre, San Valentín</li>
+        <li>Eventos corporativos y empresariales</li>
+        <li>Bautizos y primera comunión</li>
+        <li>Graduaciones y promociones</li>
+        <li>Catering completo de postres para eventos</li>
+      </ul>
+    </div>
+    <div class="contrato-card reveal">
+      <h3>📦 Personalización disponible</h3>
+      <ul class="contrato-list">
+        <li>Masa: vainilla, chocolate, frutilla y combinaciones</li>
+        <li>Sabor de humectado: manjar, 3 leches, leche, café, piña</li>
+        <li>Rellenos: crema, manjar, durazno, coco, oreo, frutilla y más</li>
+        <li>Decorado: más de 30 opciones en catálogo (series B y C)</li>
+        <li>Tamaño: desde 8 hasta 30 porciones (o más en eventos)</li>
+        <li>Temáticas y personalizadas: diseño completamente a medida</li>
+        <li>Mensaje y dedicatoria incluidos en el decorado</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT FORM -->
+<section class="section section-cream reveal">
+  <div class="container text-center" style="margin-bottom:48px;">
+    <span class="eyebrow">Solicitar Contrato</span>
+    <h2 class="section-title">Cotiza tu <em>evento</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+    <p class="section-desc">Completa el formulario y te contactaremos con la cotización personalizada para tu evento.</p>
+  </div>
+
+  <div class="event-form-wrap">
+    <div class="event-form-title">Formulario de Contrato de Evento</div>
+    <p class="event-form-sub">Información necesaria para preparar tu cotización. Todos los campos son importantes.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="evNombre">Nombre completo *</label>
+        <input type="text" id="evNombre" placeholder="Tu nombre" required />
+      </div>
+      <div class="form-group">
+        <label for="evTelefono">Teléfono / WhatsApp *</label>
+        <input type="tel" id="evTelefono" placeholder="+591 7XXXXXXX" required />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="evTipoEvento">Tipo de evento *</label>
+        <select id="evTipoEvento">
+          <option value="">— Selecciona —</option>
+          <option>Cumpleaños</option>
+          <option>Boda / Matrimonio</option>
+          <option>Baby Shower</option>
+          <option>Bautizo / Primera Comunión</option>
+          <option>Día de la Madre / Padre</option>
+          <option>Graduación</option>
+          <option>Evento corporativo</option>
+          <option>Catering completo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="evFecha">Fecha del evento *</label>
+        <input type="date" id="evFecha" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="evPersonas">Número de personas aproximado *</label>
+        <input type="number" id="evPersonas" placeholder="Ej: 50" min="1" />
+      </div>
+      <div class="form-group">
+        <label for="evPresupuesto">Presupuesto aproximado (Bs)</label>
+        <input type="text" id="evPresupuesto" placeholder="Ej: 500 Bs" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="evProductos">Productos de interés</label>
+      <select id="evProductos">
+        <option value="">— Selecciona el tipo —</option>
+        <option>Solo torta principal</option>
+        <option>Torta + postres adicionales</option>
+        <option>Catering completo de dulces</option>
+        <option>Mesa de postres para evento</option>
+        <option>Torta temática personalizada</option>
+        <option>Torta de varios pisos (boda)</option>
+        <option>A definir con el equipo</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="evSucursal">Sucursal de preferencia</label>
+      <select id="evSucursal">
+        <option value="">— Cualquiera disponible —</option>
+        <option value="americas">Sucursal Américas (+591 786 60109)</option>
+        <option value="pando">Sucursal Pando (+591 754 51278)</option>
+        <option value="central">Central & Fábrica (+591 744 05636)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="evDetalles">Detalles adicionales del evento</label>
+      <textarea id="evDetalles" placeholder="Cuéntanos más sobre tu evento: diseño que tienes en mente, colores, temática, referencias de fotos, alergias alimentarias, etc."></textarea>
+    </div>
+
+    <button class="btn-send-event" onclick="sendEventForm()">
+      Enviar solicitud por WhatsApp
+    </button>
+    <p class="event-note">Te responderemos en menos de 24 horas hábiles con tu cotización personalizada.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-white reveal">
+  <div class="container text-center" style="margin-bottom:48px;">
+    <span class="eyebrow">Preguntas Frecuentes</span>
+    <h2 class="section-title">Dudas <em>más comunes</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+  </div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Con cuánta anticipación debo hacer mi pedido?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">Para pedidos regulares, recomendamos al menos <strong>5 días de anticipación</strong>. Para bodas, eventos corporativos o tortas de varios pisos, lo ideal es contactarnos con <strong>3 a 4 semanas</strong> de anticipación para garantizar disponibilidad y el mejor resultado.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Cómo realizo el pago del anticipo?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">El anticipo corresponde al <strong>50% del total</strong> del pedido y se realiza para reservar tu fecha. Puedes pagarlo mediante transferencia bancaria, Tigo Money u otros medios que coordinamos directamente por WhatsApp. El saldo restante se cancela al momento de la entrega.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Puedo cambiar el diseño después de confirmar?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">Sí, aceptamos cambios de diseño siempre que se comuniquen con al menos <strong>48 horas de anticipación</strong> a la fecha de entrega. Cambios muy cerca de la fecha pueden no ser posibles según el estado de elaboración de la torta.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Hacen entregas a domicilio?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">Sí, ofrecemos entrega a domicilio dentro de Sucre. El costo de envío se coordina directamente según la ubicación. También puedes recoger tu pedido en cualquiera de nuestras 3 sucursales sin costo adicional.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué incluye el decorado estándar?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">El decorado estándar está incluido en el precio de la torta. Contamos con más de 30 opciones en nuestro catálogo de decorados (series B y C). Los decorados de la serie B01–B05 y algunos de la serie C no tienen costo extra. Los decorados B06, B12, C02 y C04 tienen un costo adicional de <strong>0.50 Bs por porción</strong>, y los de la serie C07 en adelante tienen un costo de <strong>1 Bs por porción</strong>.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuál es la política de cancelación?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-a">Cancelaciones realizadas con más de <strong>72 horas de anticipación</strong> pueden coordinar la devolución o el traslado del anticipo a otra fecha. Cancelaciones con menos de 72 horas no son reembolsables, ya que los insumos ya han sido adquiridos y la producción iniciada.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">Más Deli</div>
+      <div class="logo-sub">— Dulces Recuerdos —</div>
+      <p>Pastelería artesanal en Sucre, Bolivia.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="pedidos.html">Pedidos</a></li>
+        <li><a href="contratos.html">Contratos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Sucursales</h4>
+      <p>Sucursal Américas · +591 786 60109</p><br/>
+      <p>Sucursal Pando · +591 754 51278</p><br/>
+      <p>Central & Fábrica · +591 744 05636</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Más Deli – Pastelería · Sucre, Bolivia</span>
+    <span class="footer-instagram"><a href="https://www.instagram.com/masdeli.pasteleria/" target="_blank">@masdeli.pasteleria</a></span>
+  </div>
+</footer>
+
+<a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Quiero%20información%20sobre%20contratos%20y%20eventos%20🎂" target="_blank" class="wa-float">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="scroll.js"></script>
+<script>
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Event form send
+  function sendEventForm() {
+    const nombre = document.getElementById('evNombre').value.trim();
+    const tel = document.getElementById('evTelefono').value.trim();
+    const evento = document.getElementById('evTipoEvento').value;
+    const fecha = document.getElementById('evFecha').value;
+    const personas = document.getElementById('evPersonas').value;
+    const presupuesto = document.getElementById('evPresupuesto').value.trim();
+    const productos = document.getElementById('evProductos').value;
+    const sucursal = document.getElementById('evSucursal').options[document.getElementById('evSucursal').selectedIndex].text;
+    const detalles = document.getElementById('evDetalles').value.trim();
+
+    if (!nombre || !tel || !evento) {
+      alert('Por favor completa los campos obligatorios: nombre, teléfono y tipo de evento.');
+      return;
+    }
+
+    const msg = `🎂 *SOLICITUD DE CONTRATO DE EVENTO – MÁS DELI*
+
+👤 *Nombre:* ${nombre}
+📱 *Teléfono:* ${tel}
+🎉 *Tipo de evento:* ${evento}
+📅 *Fecha del evento:* ${fecha || 'Por definir'}
+👥 *Personas aprox.:* ${personas || 'Por definir'}
+💰 *Presupuesto:* ${presupuesto || 'Por definir'}
+🎂 *Productos:* ${productos || 'Por definir'}
+🏪 *Sucursal:* ${sucursal}
+📝 *Detalles:* ${detalles || 'Sin detalles adicionales'}
+
+_Por favor contáctame para coordinar los detalles y la cotización._`;
+
+    const whatsappNum = '59178660109';
+    window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+</script>
+</body>
+</html>

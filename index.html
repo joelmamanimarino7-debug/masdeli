@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Más Deli – Pastelería Artesanal | Sucre, Bolivia</title>
+  <meta name="description" content="Pastelería artesanal en Sucre, Bolivia. Tortas personalizadas para cada celebración. 3 sucursales." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: -20% 0;
+      background: url('Fondo principal.png') center/cover no-repeat;
+      transform-origin: center top;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(20,8,4,.52) 0%,
+        rgba(20,8,4,.38) 50%,
+        rgba(20,8,4,.65) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 760px; padding: 0 24px;
+    }
+    .hero-pre {
+      font-size: .7rem; font-weight: 600; letter-spacing: .32em;
+      text-transform: uppercase; color: rgba(255,255,255,.7);
+      margin-bottom: 20px; display: block;
+    }
+    .hero-logo {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; border: 2.5px solid rgba(255,255,255,.5);
+      margin-bottom: 28px;
+      box-shadow: 0 0 0 8px rgba(255,255,255,.08);
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      font-weight: 300; color: var(--white);
+      line-height: 1; letter-spacing: .02em; margin-bottom: 10px;
+    }
+    .hero-title em { font-style: italic; }
+    .hero-tagline {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: rgba(255,255,255,.75); margin-bottom: 22px;
+      letter-spacing: .06em;
+    }
+    .hero-location {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.6); margin-bottom: 40px;
+    }
+    .hero-divider {
+      width: 1px; height: 14px; background: rgba(255,255,255,.3); display: inline-block; margin: 0 4px;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .hero-btns .btn {
+      border-radius: 2px; font-size: .72rem; letter-spacing: .14em;
+      padding: 14px 36px;
+    }
+    .btn-hero-primary {
+      background: var(--white); color: var(--espresso);
+    }
+    .btn-hero-primary:hover { background: var(--rose); color: var(--white); }
+    .btn-hero-outline {
+      background: transparent; color: var(--white);
+      border: 1px solid rgba(255,255,255,.5);
+    }
+    .btn-hero-outline:hover { background: rgba(255,255,255,.1); }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.45); font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+    @keyframes scroll-line { 0%,100%{ opacity:.4; transform:scaleY(1) } 50%{ opacity:1; transform:scaleY(1.1) } }
+
+    /* ── STRIP INTRO ── */
+    .strip {
+      background: var(--espresso);
+      padding: 26px 5%;
+      display: flex; justify-content: center; align-items: center;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .strip-item {
+      color: rgba(255,255,255,.6); font-size: .7rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .strip-item::before { content: '✦'; color: var(--rose); font-size: .55rem; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 100px 5%; }
+    .section-cream { background: var(--cream); }
+    .section-white { background: var(--white); }
+    .section-cream2 { background: var(--cream-2); }
+
+    /* ── HISTORIA PREVIEW ── */
+    .historia-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; max-width: 1100px; margin: 0 auto;
+    }
+    .historia-img {
+      position: relative;
+    }
+    .historia-img img {
+      width: 100%; height: 520px; object-fit: cover;
+      border-radius: 1px;
+      box-shadow: 24px 24px 0 var(--rose-light);
+    }
+    .historia-year {
+      position: absolute; bottom: -16px; right: -24px;
+      background: var(--espresso); color: var(--white);
+      padding: 18px 24px; font-family: var(--font-serif);
+      font-size: 1rem; letter-spacing: .06em;
+      text-align: center;
+    }
+    .historia-year strong { display: block; font-size: 2rem; font-weight: 300; color: var(--rose-light); }
+    .historia-text { text-align: left; }
+    .historia-text .section-title { text-align: left; }
+    .historia-text .ornament { justify-content: flex-start; }
+    .historia-text p { font-size: 1rem; color: var(--gris); line-height: 1.9; margin-bottom: 18px; }
+    .historia-text a { margin-top: 8px; }
+
+    .valores {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; margin-top: 32px;
+    }
+    .valor-item {
+      background: var(--cream); padding: 16px 18px;
+      border-left: 2px solid var(--rose-light);
+    }
+    .valor-item strong { display: block; font-family: var(--font-serif); color: var(--mocha); font-size: .95rem; margin-bottom: 3px; }
+    .valor-item span { font-size: .8rem; color: var(--gris); }
+
+    /* ── PRODUCTOS PREVIEW ── */
+    .prod-preview-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; max-width: 1100px; margin: 0 auto 48px;
+    }
+    .prod-card {
+      position: relative; overflow: hidden; background: var(--cream-2);
+      cursor: pointer;
+    }
+    .prod-card img {
+      width: 100%; height: 340px; object-fit: cover;
+      display: block; transition: transform .5s ease;
+    }
+    .prod-card:hover img { transform: scale(1.04); }
+    .prod-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,8,4,.72) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 24px 22px;
+    }
+    .prod-card-label {
+      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(196,116,138,.9); margin-bottom: 5px;
+    }
+    .prod-card-name {
+      font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400;
+      color: var(--white); line-height: 1.2;
+    }
+    .prod-card-price {
+      font-size: .78rem; color: rgba(255,255,255,.6); margin-top: 5px;
+    }
+    .prod-card.featured { grid-row: span 2; }
+    .prod-card.featured img { height: 100%; min-height: 440px; }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: var(--rose); padding: 70px 5%;
+      text-align: center;
+    }
+    .cta-band h2 {
+      font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300; color: var(--white); margin-bottom: 12px;
+    }
+    .cta-band h2 em { font-style: italic; }
+    .cta-band p { color: rgba(255,255,255,.8); margin-bottom: 32px; font-size: 1rem; }
+    .cta-band .btn {
+      background: var(--white); color: var(--rose);
+      letter-spacing: .14em;
+    }
+    .cta-band .btn:hover { background: var(--espresso); color: var(--white); }
+
+    /* ── GALERÍA STRIP ── */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 3px;
+    }
+    .gal-item { overflow: hidden; }
+    .gal-item img { width: 100%; height: 280px; object-fit: cover; display: block; transition: transform .5s; }
+    .gal-item:hover img { transform: scale(1.05); }
+    .gal-item.tall { grid-row: span 2; }
+    .gal-item.tall img { height: 100%; min-height: 500px; }
+    .gallery-cta { text-align: center; margin-top: 36px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .historia-grid { grid-template-columns: 1fr; gap: 48px; }
+      .historia-img img { height: 340px; }
+      .historia-year { bottom: -14px; right: 10px; }
+      .prod-preview-grid { grid-template-columns: repeat(2,1fr); }
+      .prod-card.featured img { min-height: 280px; }
+      .gallery-strip { grid-template-columns: 1fr 1fr; }
+      .gal-item.tall { grid-row: span 1; }
+      .gal-item.tall img { min-height: 260px; height: 260px; }
+    }
+    @media (max-width: 580px) {
+      .prod-preview-grid { grid-template-columns: 1fr; }
+      .prod-card.featured { grid-row: span 1; }
+      .gallery-strip { grid-template-columns: 1fr; }
+      .strip { flex-direction: column; gap: 16px; padding: 24px 5%; }
+      .strip-item { justify-content: center; }
+      .section { padding: 56px 5% !important; }
+      .hero-stats { gap: 12px; }
+      /* Hero móvil */
+      .hero-pre { font-size: .6rem; letter-spacing: .18em; }
+      .hero-logo { width: 88px; height: 88px; margin-bottom: 18px; }
+      .hero-title { font-size: clamp(2.6rem, 12vw, 4rem); }
+      .hero-tagline { font-size: .95rem; }
+      .hero-location {
+        flex-wrap: wrap; justify-content: center; gap: 6px;
+        font-size: .62rem; letter-spacing: .1em; margin-bottom: 28px;
+      }
+      .hero-divider { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.4); align-self: center; }
+      .hero-btns { flex-direction: column; gap: 10px; align-items: center; }
+      .hero-btns .btn { width: 80%; text-align: center; justify-content: center; padding: 13px 20px; }
+      .hero-scroll { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<div id="scroll-progress"></div>
+<nav class="navbar hero-nav" id="navbar">
+  <a class="nav-brand" href="index.html">
+    <img src="285654978_4898080570315106_8575377553896454271_n.jpg" alt="Más Deli" />
+    <div>
+      <div class="nav-brand-text">Más Deli</div>
+      <div class="nav-brand-sub">Dulces Recuerdos</div>
+    </div>
+  </a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="historia.html">Nuestra Historia</a></li>
+    <li><a href="productos.html">Productos</a></li>
+    <li><a href="pedidos.html">Pedidos</a></li>
+    <li class="nav-cta"><a href="contratos.html">Contratos</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-pre">Pastelería Artesanal · Sucre, Bolivia</span>
+    <img class="hero-logo" src="285654978_4898080570315106_8575377553896454271_n.jpg" alt="Más Deli" />
+    <h1 class="hero-title"><em>Más Deli</em></h1>
+    <p class="hero-tagline">— Dulces Recuerdos —</p>
+    <p class="hero-location">
+      Sucre, Bolivia
+      <span class="hero-divider"></span>
+      3 Sucursales
+      <span class="hero-divider"></span>
+      Desde 80 Bs
+    </p>
+    <div class="hero-btns">
+      <a href="pedidos.html" class="btn btn-hero-primary">Ver Catálogo</a>
+      <a href="productos.html" class="btn btn-hero-outline">Nuestros Productos</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── STRIP ── -->
+<div class="strip">
+  <div class="strip-item">Ingredientes Frescos</div>
+  <div class="strip-item">Tortas Personalizadas</div>
+  <div class="strip-item">3 Sucursales en Sucre</div>
+  <div class="strip-item">Pedidos por WhatsApp</div>
+  <div class="strip-item">Desde 80 Bs</div>
+</div>
+
+<!-- ── HISTORIA PREVIEW ── -->
+<section class="section section-white reveal">
+  <div class="historia-grid container">
+    <div class="historia-img">
+      <img src="post_3.jpg" alt="Equipo Más Deli" />
+      <div class="historia-year">
+        <strong>❤</strong>
+        Sucre<br/>Bolivia
+      </div>
+    </div>
+    <div class="historia-text">
+      <span class="eyebrow">Nuestra Historia</span>
+      <h2 class="section-title">Nació de una pasión por <em>endulzar vidas</em></h2>
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <span class="ornament-icon">✦</span>
+        <div class="ornament-line"></div>
+      </div>
+      <p>Más Deli nació del sueño de crear no solo tortas y postres, sino experiencias que perduran en la memoria. Cada pieza que sale de nuestra cocina lleva horas de dedicación, ingredientes seleccionados y el amor que ponemos en cada detalle.</p>
+      <p>Somos una pastelería artesanal con 3 sucursales en Sucre, Bolivia, especializada en tortas y postres personalizados para todas las ocasiones.</p>
+      <div class="valores">
+        <div class="valor-item"><strong>Ingredientes Frescos</strong><span>Selección diaria de insumos</span></div>
+        <div class="valor-item"><strong>Diseño Personalizado</strong><span>Cada torta, única</span></div>
+        <div class="valor-item"><strong>Hecho con Amor</strong><span>Artesanía en cada paso</span></div>
+        <div class="valor-item"><strong>3 Sucursales</strong><span>Cerca de ti en Sucre</span></div>
+      </div>
+      <a href="historia.html" class="btn btn-outline">Conocer más</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTOS PREVIEW ── -->
+<section class="section section-cream reveal" style="padding-top:80px; padding-bottom:80px;">
+  <div class="container text-center" style="margin-bottom:52px;">
+    <span class="eyebrow">Especialidades</span>
+    <h2 class="section-title">Nuestras <em>Creaciones</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+    <p class="section-desc">Tortas artesanales con sabores únicos y diseños irresistibles, elaboradas con los mejores ingredientes para cada celebración.</p>
+  </div>
+  <div class="prod-preview-grid container">
+    <div class="prod-card featured">
+      <img src="post_1.jpg" alt="Torta Personalizada" />
+      <div class="prod-card-overlay">
+        <div class="prod-card-label">Especialidad</div>
+        <div class="prod-card-name">Tortas Personalizadas</div>
+        <div class="prod-card-price">Desde 130 Bs</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <img src="post_2.jpg" alt="Torta 3 Leches" />
+      <div class="prod-card-overlay">
+        <div class="prod-card-label">Línea Dulce</div>
+        <div class="prod-card-name">Torta 3 Leches</div>
+        <div class="prod-card-price">Desde 112 Bs</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <img src="post_8.jpg" alt="Torta Arcoíris" />
+      <div class="prod-card-overlay">
+        <div class="prod-card-label">Línea Menos Dulce</div>
+        <div class="prod-card-name">Torta Arcoíris</div>
+        <div class="prod-card-price">Desde 96 Bs</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <img src="post_4.jpg" alt="Tortas Temáticas" />
+      <div class="prod-card-overlay">
+        <div class="prod-card-label">Para los más pequeños</div>
+        <div class="prod-card-name">Tortas Temáticas</div>
+        <div class="prod-card-price">Consultar precio</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <img src="post_5.jpg" alt="Galería Más Deli" />
+      <div class="prod-card-overlay">
+        <div class="prod-card-label">Eventos</div>
+        <div class="prod-card-name">Catering & Eventos</div>
+        <div class="prod-card-price">A convenir</div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <a href="productos.html" class="btn btn-primary">Ver Catálogo Completo</a>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section class="cta-band reveal">
+  <h2>¿Lista para hacer <em>tu pedido</em>?</h2>
+  <p>Con al menos 5 días de anticipación. Bodas y eventos grandes: 3–4 semanas.</p>
+  <a href="pedidos.html" class="btn">Hacer mi pedido ahora</a>
+</section>
+
+<!-- ── GALERÍA ── -->
+<section class="section section-cream reveal" style="padding-top:80px; padding-bottom:80px;">
+  <div class="container text-center" style="margin-bottom:44px;">
+    <span class="eyebrow">Galería</span>
+    <h2 class="section-title">Momentos <em>Dulces</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+  </div>
+  <div class="gallery-strip container">
+    <div class="gal-item tall">
+      <img src="post_1.jpg" alt="Torta floral" />
+    </div>
+    <div class="gal-item">
+      <img src="post_5.jpg" alt="Sucursal Más Deli" />
+    </div>
+    <div class="gal-item">
+      <img src="post_2.jpg" alt="Torta 3 Leches" />
+    </div>
+    <div class="gal-item">
+      <img src="post_7.jpg" alt="Día de la Madre" />
+    </div>
+    <div class="gal-item">
+      <img src="post_9.jpg" alt="Equipo Más Deli" />
+    </div>
+  </div>
+  <div class="gallery-cta">
+    <a href="https://www.instagram.com/masdeli.pasteleria/" target="_blank" class="btn btn-outline">
+      Ver más en Instagram
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">Más Deli</div>
+      <div class="logo-sub">— Dulces Recuerdos —</div>
+      <p>Pastelería artesanal en Sucre, Bolivia. Tortas y postres personalizados para cada celebración especial.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="pedidos.html">Pedidos</a></li>
+        <li><a href="contratos.html">Contratos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Sucursales</h4>
+      <p>Sucursal Américas<br/>+591 786 60109</p><br/>
+      <p>Sucursal Pando<br/>+591 754 51278</p><br/>
+      <p>Central & Fábrica<br/>+591 744 05636</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Más Deli – Pastelería · Sucre, Bolivia</span>
+    <span class="footer-instagram"><a href="https://www.instagram.com/masdeli.pasteleria/" target="_blank">@masdeli.pasteleria</a></span>
+  </div>
+</footer>
+
+<!-- ── FLOATING WHATSAPP ── -->
+<a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Quiero%20hacer%20un%20pedido%20🎂" target="_blank" class="wa-float" title="Escribir al WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="scroll.js"></script>
+</body>
+</html>

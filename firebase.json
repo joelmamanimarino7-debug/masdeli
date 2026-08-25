@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "*.pdf",
+      "*.py",
+      "*.log",
+      ".git/**",
+      "MAS DELI/**"
+    ]
+  }
+}
