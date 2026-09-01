@@ -97,6 +97,21 @@
     }
     .value-card p { font-size: .88rem; color: var(--gris); line-height: 1.7; }
 
+    /* ── MISIÓN Y VISIÓN ── */
+    .mv-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; max-width: 1000px; margin: 0 auto;
+    }
+    .mv-card {
+      background: var(--white); padding: 44px 38px;
+      border-radius: 2px; box-shadow: 0 8px 32px rgba(0,0,0,.05);
+    }
+    .mv-card .icon { font-size: 2.2rem; margin-bottom: 18px; }
+    .mv-card h3 {
+      font-family: var(--font-serif); font-size: 1.5rem; color: var(--mocha); margin-bottom: 14px;
+    }
+    .mv-card p { font-size: .95rem; color: var(--gris); line-height: 1.85; }
+
     /* ── GALLERY ROW ── */
     .gallery-row {
       display: grid; grid-template-columns: repeat(4, 1fr);
@@ -119,6 +134,7 @@
       .historia-intro { grid-template-columns: 1fr; gap: 40px; }
       .historia-intro img { height: 300px; }
       .values-grid { grid-template-columns: 1fr 1fr; }
+      .mv-grid { grid-template-columns: 1fr; gap: 20px; }
       .gallery-row { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 520px) {
@@ -217,6 +233,27 @@
         <h3>El futuro</h3>
         <p>Seguimos creciendo, innovando con nuevos sabores y diseños, y manteniendo la esencia que nos define: hacer que cada celebración sea un dulce recuerdo para toda la vida.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISIÓN Y VISIÓN ── -->
+<section class="section section-cream2 reveal">
+  <div class="container text-center" style="margin-bottom:52px;">
+    <span class="eyebrow">Nuestra Esencia</span>
+    <h2 class="section-title">Misión y <em>Visión</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+  </div>
+  <div class="mv-grid">
+    <div class="mv-card reveal">
+      <div class="icon">🎯</div>
+      <h3>Misión</h3>
+      <p>Creamos tortas y postres de alta calidad e inigualable sabor, que acompañan las celebraciones y momentos especiales de nuestros clientes, brindando diseños personalizados, un buen servicio y una experiencia que deja dulces recuerdos.</p>
+    </div>
+    <div class="mv-card reveal">
+      <div class="icon">🔭</div>
+      <h3>Visión</h3>
+      <p>Ser una pastelería modelo en Bolivia, reconocida por la excelencia de nuestros productos, la calidad de nuestros procesos y por desarrollar un equipo humano comprometido, que trabaje con amor, dedicación y pasión.</p>
     </div>
   </div>
 </section>
