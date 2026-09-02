@@ -8,6 +8,7 @@
       "*.py",
       "*.log",
       "*.heic",
+      "IMG_*.jpg",
       ".git/**",
       "MAS DELI/**"
     ]
