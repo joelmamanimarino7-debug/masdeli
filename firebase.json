@@ -10,7 +10,8 @@
       "*.heic",
       "IMG_*.jpg",
       ".git/**",
-      "MAS DELI/**"
+      "MAS DELI/**",
+      "Mas Deli demo 3.mp4"
     ]
   }
 }

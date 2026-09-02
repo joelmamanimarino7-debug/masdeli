@@ -37,16 +37,17 @@
     }
     .hero-bg {
       position: absolute; inset: -20% 0;
-      background: url('Fondo principal.png') center/cover no-repeat;
+      width: 100%; height: 140%;
+      object-fit: cover;
       transform-origin: center top;
       will-change: transform;
     }
     .hero-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to bottom,
-        rgba(20,8,4,.52) 0%,
-        rgba(20,8,4,.38) 50%,
-        rgba(20,8,4,.65) 100%);
+        rgba(20,8,4,.26) 0%,
+        rgba(20,8,4,.14) 50%,
+        rgba(20,8,4,.38) 100%);
     }
     .hero-content {
       position: relative; z-index: 2;
@@ -57,6 +58,7 @@
       font-size: clamp(4rem, 11vw, 8.5rem);
       font-weight: 400; color: var(--white);
       line-height: 1; margin-bottom: 18px;
+      text-shadow: 0 4px 40px rgba(0,0,0,.6), 0 2px 14px rgba(0,0,0,.5), 0 1px 4px rgba(0,0,0,.4);
     }
     .hero-since {
       font-family: var(--font-sans);
@@ -264,7 +266,18 @@
 
 <!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <video class="hero-bg" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg"></video>
+  <script>
+    (function () {
+      var v = document.getElementById('heroVideo');
+      var w = window.innerWidth || document.documentElement.clientWidth || 1280;
+      var s = document.createElement('source');
+      s.src = (w > 0 && w <= 767) ? 'hero-video-mobile.mp4' : 'hero-video.mp4';
+      s.type = 'video/mp4';
+      v.appendChild(s);
+      v.load();
+    })();
+  </script>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-title">Más Deli</h1>
@@ -329,7 +342,7 @@
   </div>
   <div class="prod-preview-grid container">
     <div class="prod-card featured">
-      <img src="post_1.jpg" alt="Torta Personalizada" />
+      <img src="product_2.jpg" alt="Torta Personalizada" />
       <div class="prod-card-overlay">
         <div class="prod-card-label">Especialidad</div>
         <div class="prod-card-name">Tortas Personalizadas</div>
@@ -337,7 +350,7 @@
       </div>
     </div>
     <div class="prod-card">
-      <img src="post_2.jpg" alt="Torta 3 Leches" />
+      <img src="product_3.jpg" alt="Torta 3 Leches" />
       <div class="prod-card-overlay">
         <div class="prod-card-label">Línea Dulce</div>
         <div class="prod-card-name">Torta 3 Leches</div>
@@ -345,7 +358,7 @@
       </div>
     </div>
     <div class="prod-card">
-      <img src="post_8.jpg" alt="Torta Arcoíris" />
+      <img src="product_12.jpg" alt="Torta Arcoíris" />
       <div class="prod-card-overlay">
         <div class="prod-card-label">Línea Menos Dulce</div>
         <div class="prod-card-name">Torta Arcoíris</div>
@@ -353,7 +366,7 @@
       </div>
     </div>
     <div class="prod-card">
-      <img src="post_4.jpg" alt="Tortas Temáticas" />
+      <img src="product_4.jpg" alt="Tortas Temáticas" />
       <div class="prod-card-overlay">
         <div class="prod-card-label">Para los más pequeños</div>
         <div class="prod-card-name">Tortas Temáticas</div>
@@ -361,7 +374,7 @@
       </div>
     </div>
     <div class="prod-card">
-      <img src="post_5.jpg" alt="Galería Más Deli" />
+      <img src="product_6.jpg" alt="Galería Más Deli" />
       <div class="prod-card-overlay">
         <div class="prod-card-label">Eventos</div>
         <div class="prod-card-name">Catering & Eventos</div>
