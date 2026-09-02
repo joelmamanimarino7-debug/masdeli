@@ -223,6 +223,11 @@
       .gal-item.tall { grid-row: span 1; }
       .gal-item.tall img { min-height: 260px; height: 260px; }
     }
+    @media (max-width: 767px) {
+      /* Sin buffer de parallax en móvil: el video ya tiene movimiento propio,
+         y el buffer alto hacía que object-fit:cover recortara casi todo el ancho. */
+      .hero-bg { inset: 0; height: 100%; }
+    }
     @media (max-width: 580px) {
       .prod-preview-grid { grid-template-columns: 1fr; }
       .prod-card.featured { grid-row: span 1; }

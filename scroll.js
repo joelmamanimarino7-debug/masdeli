@@ -25,7 +25,9 @@
   function updateHeroParallax(scrollY) {
     if (!heroBg || !hero) return;
     if (scrollY > hero.offsetHeight) return;
-    heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    if (window.innerWidth > 767) {
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    }
     const content = hero.querySelector('.hero-content');
     if (content) {
       const p = scrollY / hero.offsetHeight;
