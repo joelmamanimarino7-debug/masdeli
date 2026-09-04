@@ -305,13 +305,15 @@
 
 <!-- ── HERO ── -->
 <section class="hero">
-  <video class="hero-bg" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg"></video>
+  <video class="hero-bg" id="heroVideo" autoplay muted loop playsinline preload="auto"></video>
   <script>
     (function () {
       var v = document.getElementById('heroVideo');
       var w = window.innerWidth || document.documentElement.clientWidth || 1280;
+      var isMobile = w > 0 && w <= 767;
+      v.poster = isMobile ? 'hero-poster-mobile.jpg' : 'hero-poster.jpg';
       var s = document.createElement('source');
-      s.src = (w > 0 && w <= 767) ? 'hero-video-mobile.mp4' : 'hero-video.mp4';
+      s.src = isMobile ? 'hero-video-mobile.mp4' : 'hero-video.mp4';
       s.type = 'video/mp4';
       v.appendChild(s);
       v.load();
