@@ -246,6 +246,21 @@
     .gal-item.tall img { height: 100%; min-height: 500px; }
     .gallery-cta { text-align: center; margin-top: 36px; }
 
+    /* ── SUCURSALES PREVIEW ── */
+    .sucursales-mini-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; max-width: 900px; margin: 0 auto 44px;
+    }
+    .sucursal-mini {
+      text-align: center; padding: 32px 20px;
+      background: var(--cream); border: 1px solid var(--rose-light);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .sucursal-mini:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(255, 62, 126,.12); }
+    .sucursal-mini-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .sucursal-mini-name { font-family: var(--font-serif); font-size: 1.15rem; color: var(--mocha); margin-bottom: 4px; }
+    .sucursal-mini-zona { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .historia-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -256,6 +271,7 @@
       .gallery-strip { grid-template-columns: 1fr 1fr; }
       .gal-item.tall { grid-row: span 1; }
       .gal-item.tall img { min-height: 260px; height: 260px; }
+      .sucursales-mini-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 767px) {
       /* Sin buffer de parallax en móvil: el video ya tiene movimiento propio,
@@ -266,6 +282,7 @@
       .prod-preview-grid { grid-template-columns: 1fr; }
       .prod-card.featured { grid-row: span 1; }
       .gallery-strip { grid-template-columns: 1fr; }
+      .sucursales-mini-grid { grid-template-columns: 1fr; }
       .strip { flex-direction: column; gap: 16px; padding: 24px 5%; }
       .strip-item { justify-content: center; }
       .section { padding: 56px 5% !important; }
@@ -296,7 +313,7 @@
     <li><a href="historia.html">Nuestra Historia</a></li>
     <li><a href="productos.html">Productos</a></li>
     <li><a href="pedidos.html">Pedidos</a></li>
-    <li class="nav-cta"><a href="contratos.html">Contratos</a></li>
+    <li class="nav-cta"><a href="contratos.html">Sucursales</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
     <span></span><span></span><span></span>
@@ -465,6 +482,36 @@
   </div>
 </section>
 
+<!-- ── SUCURSALES ── -->
+<section class="section section-white reveal" style="padding-top:80px; padding-bottom:80px;">
+  <div class="container text-center" style="margin-bottom:44px;">
+    <span class="eyebrow">Sucursales</span>
+    <h2 class="section-title">Encuéntranos en <em>Sucre</em></h2>
+    <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
+    <p class="section-desc">3 puntos de atención listos para tu próxima celebración.</p>
+  </div>
+  <div class="sucursales-mini-grid container">
+    <div class="sucursal-mini">
+      <div class="sucursal-mini-icon">🏪</div>
+      <div class="sucursal-mini-name">Sucursal Américas</div>
+      <div class="sucursal-mini-zona">Zona Américas · Sucre</div>
+    </div>
+    <div class="sucursal-mini">
+      <div class="sucursal-mini-icon">🏬</div>
+      <div class="sucursal-mini-name">Sucursal Pando</div>
+      <div class="sucursal-mini-zona">Zona Pando · Sucre</div>
+    </div>
+    <div class="sucursal-mini">
+      <div class="sucursal-mini-icon">🏭</div>
+      <div class="sucursal-mini-name">Central & Fábrica</div>
+      <div class="sucursal-mini-zona">Sede Central · Sucre</div>
+    </div>
+  </div>
+  <div class="text-center">
+    <a href="contratos.html" class="btn btn-primary">Ver todas las sucursales</a>
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-grid">
@@ -480,7 +527,7 @@
         <li><a href="historia.html">Nuestra Historia</a></li>
         <li><a href="productos.html">Productos</a></li>
         <li><a href="pedidos.html">Pedidos</a></li>
-        <li><a href="contratos.html">Contratos</a></li>
+        <li><a href="contratos.html">Sucursales</a></li>
       </ul>
     </div>
     <div class="footer-col">
