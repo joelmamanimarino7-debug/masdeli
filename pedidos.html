@@ -213,17 +213,15 @@
     }
     .qr-block-title { font-family: var(--font-serif); font-size: 1rem; color: var(--mocha); margin-bottom: 8px; }
     .qr-placeholder {
-      width: 160px; height: 160px; margin: 0 auto 12px;
+      max-width: 260px; margin: 0 auto 12px;
       background: var(--white); border: 1px solid var(--cream-2);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 8px;
+      padding: 10px;
     }
-    .qr-svg { width: 120px; height: 120px; }
+    .qr-img { width: 100%; height: auto; display: block; }
     .qr-anticipo {
       font-size: .8rem; color: var(--rose); font-weight: 600;
       margin-bottom: 12px;
     }
-    .qr-note { font-size: .75rem; color: var(--gris); font-style: italic; }
     .btn-download-qr {
       display: inline-flex; align-items: center; gap: 7px;
       padding: 10px 22px; border: 1.5px solid var(--mocha);
@@ -671,39 +669,9 @@
       <div class="qr-block">
         <div class="qr-block-title">Código QR de pago</div>
         <div class="qr-placeholder">
-          <!-- QR placeholder SVG -->
-          <svg class="qr-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="120" height="120" fill="white"/>
-            <!-- QR pattern placeholder -->
-            <rect x="10" y="10" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
-            <rect x="14" y="14" width="32" height="32" rx="1" fill="white"/>
-            <rect x="18" y="18" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
-            <rect x="70" y="10" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
-            <rect x="74" y="14" width="32" height="32" rx="1" fill="white"/>
-            <rect x="78" y="18" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
-            <rect x="10" y="70" width="40" height="40" rx="2" fill="#1e0f09" opacity=".12"/>
-            <rect x="14" y="74" width="32" height="32" rx="1" fill="white"/>
-            <rect x="18" y="78" width="24" height="24" rx="1" fill="#1e0f09" opacity=".8"/>
-            <rect x="55" y="55" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="65" y="55" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="75" y="55" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="55" y="65" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="65" y="65" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="75" y="65" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="85" y="65" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="85" y="55" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="55" y="75" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="65" y="75" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="85" y="75" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="55" y="85" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <rect x="65" y="85" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="75" y="85" width="8" height="8" fill="#1e0f09" opacity=".7"/>
-            <rect x="85" y="85" width="8" height="8" fill="#1e0f09" opacity=".4"/>
-            <text x="60" y="115" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#ff3e7e">Más Deli</text>
-          </svg>
+          <img class="qr-img" src="qr-pago.jpg" alt="Código QR de pago Más Deli - Banco Económico" />
         </div>
         <div class="qr-anticipo">⚠️ Se requiere 50% de anticipo para confirmar el pedido</div>
-        <div class="qr-note">Reemplaza esta imagen con tu QR de pago real (Tigo Money, banco, etc.)</div>
         <button class="btn-download-qr" onclick="downloadQR()">⬇ Descargar QR</button>
       </div>
     </div>
@@ -1036,12 +1004,9 @@
 
   // ── QR DOWNLOAD ──
   function downloadQR() {
-    const svg = document.querySelector('.qr-svg');
-    const data = new XMLSerializer().serializeToString(svg);
-    const blob = new Blob([data], { type: 'image/svg+xml' });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'masdeli-qr-pago.svg';
+    a.href = 'qr-pago.jpg';
+    a.download = 'masdeli-qr-pago.jpg';
     a.click();
   }
 
