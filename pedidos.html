@@ -646,6 +646,25 @@
       </div>
     </div>
 
+    <!-- 2. Datos del cliente -->
+    <div class="form-section">
+      <div class="form-section-title"><span>🧾</span> Datos del cliente</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="clienteNombre">Nombre completo</label>
+          <input type="text" id="clienteNombre" placeholder="Ej: María Pérez" required />
+        </div>
+        <div class="form-group">
+          <label for="clienteCI">Carnet de identidad</label>
+          <input type="text" id="clienteCI" placeholder="Ej: 1234567 SC" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="clienteCelular">Celular</label>
+        <input type="tel" id="clienteCelular" placeholder="Ej: 7XXXXXXX" required />
+      </div>
+    </div>
+
     <!-- 3. Entrega -->
     <div class="form-section">
       <div class="form-section-title"><span>🚗</span> Tipo de entrega</div>
@@ -657,9 +676,27 @@
           🛵 Envío a domicilio
         </div>
       </div>
+      <div id="sucursalGroup" class="form-group">
+        <label for="sucursal">Sucursal de recojo</label>
+        <select id="sucursal">
+          <option value="Sucursal Américas (Calle Nicaragua Nro. 51B, Zona Av. de las Américas)">Sucursal Américas — Calle Nicaragua Nro. 51B</option>
+          <option value="Sucursal Pando (Calle Pando Nro. 17A, Zona Mercado Campesino)">Sucursal Pando — Calle Pando Nro. 17A</option>
+          <option value="Central &amp; Fábrica (Calle Aiquile Nro. 19, Zona Alto San Juanillo)">Central &amp; Fábrica — Calle Aiquile Nro. 19</option>
+        </select>
+      </div>
       <div id="addressGroup" class="form-group" style="display:none;">
         <label for="direccion">Dirección de entrega</label>
         <input type="text" id="direccion" placeholder="Ej: Av. Américas #123, zona norte, Sucre" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fechaEntrega">Fecha de entrega</label>
+          <input type="date" id="fechaEntrega" />
+        </div>
+        <div class="form-group">
+          <label for="horaEntrega">Hora de entrega</label>
+          <input type="time" id="horaEntrega" />
+        </div>
       </div>
     </div>
 
@@ -802,6 +839,13 @@
 
   updateSliderHeight();
   window.addEventListener('resize', updateSliderHeight);
+
+  // Fecha mínima de entrega: 3 días de anticipación
+  (function () {
+    const min = new Date();
+    min.setDate(min.getDate() + 3);
+    document.getElementById('fechaEntrega').min = min.toISOString().split('T')[0];
+  })();
 
   // Touch/swipe support
   let startX = 0;
@@ -995,6 +1039,7 @@
     document.getElementById('optRecojo').classList.toggle('selected', type === 'recojo');
     document.getElementById('optEnvio').classList.toggle('selected', type === 'envio');
     document.getElementById('addressGroup').style.display = type === 'envio' ? 'block' : 'none';
+    document.getElementById('sucursalGroup').style.display = type === 'recojo' ? 'block' : 'none';
   }
 
   // ── DECORATION MODAL ──
@@ -1010,11 +1055,37 @@
     a.click();
   }
 
+  // ── CLIENTE Y ENTREGA ──
+  function getEntregaText() {
+    if (deliveryType === 'recojo') {
+      return `Recojo en local – ${document.getElementById('sucursal').value}`;
+    }
+    const direccion = document.getElementById('direccion').value.trim();
+    return `Envío a domicilio${direccion ? ': ' + direccion : ''}`;
+  }
+
+  function formatFecha(iso) {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  function validateClienteData() {
+    const nombre = document.getElementById('clienteNombre').value.trim();
+    const ci = document.getElementById('clienteCI').value.trim();
+    const celular = document.getElementById('clienteCelular').value.trim();
+    const fecha = document.getElementById('fechaEntrega').value;
+    if (!nombre || !ci || !celular) { alert('Completa tus datos: nombre, CI y celular.'); return false; }
+    if (!fecha) { alert('Selecciona la fecha de entrega.'); return false; }
+    return true;
+  }
+
   // ── CONFIRM MODAL ──
   function openConfirmModal() {
     if (cart.length === 0) { alert('Agrega al menos una torta al carrito.'); return; }
     const incomplete = cart.find(i => !i.porciones);
     if (incomplete) { alert(`Selecciona las porciones para: ${incomplete.name}`); return; }
+    if (!validateClienteData()) return;
 
     // Flush dedicatoria values from DOM
     cart.forEach(item => {
@@ -1024,8 +1095,12 @@
 
     const total = cart.reduce((s, i) => s + i.subtotal, 0);
     const anticipo = Math.ceil(total / 2);
-    const direccion = document.getElementById('direccion').value.trim();
-    const entrega = deliveryType === 'recojo' ? 'Recojo en local' : `Envío a domicilio${direccion ? ': ' + direccion : ''}`;
+    const entrega = getEntregaText();
+    const nombre = document.getElementById('clienteNombre').value.trim();
+    const ci = document.getElementById('clienteCI').value.trim();
+    const celular = document.getElementById('clienteCelular').value.trim();
+    const fecha = formatFecha(document.getElementById('fechaEntrega').value);
+    const hora = document.getElementById('horaEntrega').value;
 
     const itemRows = cart.map((item, i) => `
       <strong>${i+1}. ${item.name}</strong><br>
@@ -1034,10 +1109,12 @@
     `).join('<br>');
 
     document.getElementById('confirmSummary').innerHTML = `
+      <strong>Cliente:</strong> ${nombre} · CI ${ci} · ${celular}<br>
+      <strong>Entrega:</strong> ${fecha}${hora ? ' a las ' + hora : ''}<br><br>
       ${itemRows}<br>
       <strong>Total:</strong> ${total} Bs<br>
       <strong>Anticipo (50%):</strong> ${anticipo} Bs<br>
-      <strong>Entrega:</strong> ${entrega}
+      <strong>${deliveryType === 'recojo' ? 'Sucursal' : 'Envío'}:</strong> ${entrega}
     `;
     document.getElementById('confirmModal').classList.add('open');
   }
@@ -1047,8 +1124,12 @@
   function sendOrder() {
     const total = cart.reduce((s, i) => s + i.subtotal, 0);
     const anticipo = Math.ceil(total / 2);
-    const direccion = document.getElementById('direccion').value.trim();
-    const entrega = deliveryType === 'recojo' ? 'Recojo en local' : `Envío a domicilio: ${direccion}`;
+    const entrega = getEntregaText();
+    const nombre = document.getElementById('clienteNombre').value.trim();
+    const ci = document.getElementById('clienteCI').value.trim();
+    const celular = document.getElementById('clienteCelular').value.trim();
+    const fecha = formatFecha(document.getElementById('fechaEntrega').value);
+    const hora = document.getElementById('horaEntrega').value;
 
     // Flush dedicatoria values from DOM
     cart.forEach(item => {
@@ -1062,7 +1143,7 @@
       return line;
     }).join('\n');
 
-    const msg = `🎂 *PEDIDO - MÁS DELI*\n\n*TORTAS:*\n${itemsText}\n\n*Total estimado:* ${total} Bs\n*Anticipo (50%):* ${anticipo} Bs\n*Entrega:* ${entrega}\n\n_Por favor envía el comprobante de pago del anticipo para confirmar tu pedido._ 📎`;
+    const msg = `🎂 *PEDIDO - MÁS DELI*\n\n*CLIENTE:* ${nombre}\n*CI:* ${ci}\n*Celular:* ${celular}\n\n*TORTAS:*\n${itemsText}\n\n*Total estimado:* ${total} Bs\n*Anticipo (50%):* ${anticipo} Bs\n*Fecha de entrega:* ${fecha}${hora ? ' a las ' + hora : ''}\n*Entrega:* ${entrega}\n\n_Por favor envía el comprobante de pago del anticipo para confirmar tu pedido._ 📎`;
 
     window.open(`https://wa.me/59178660109?text=${encodeURIComponent(msg)}`, '_blank');
     closeConfirmModal();

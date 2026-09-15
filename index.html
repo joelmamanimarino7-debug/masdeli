@@ -235,15 +235,12 @@
     /* ── GALERÍA STRIP ── */
     .gallery-strip {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: repeat(3, 1fr);
       gap: 3px;
     }
     .gal-item { overflow: hidden; }
     .gal-item img { width: 100%; height: 280px; object-fit: cover; display: block; transition: transform .5s; }
     .gal-item:hover img { transform: scale(1.05); }
-    .gal-item.tall { grid-row: span 2; }
-    .gal-item.tall img { height: 100%; min-height: 500px; }
     .gallery-cta { text-align: center; margin-top: 36px; }
 
     /* ── SUCURSALES PREVIEW ── */
@@ -268,9 +265,7 @@
       .historia-year { bottom: -14px; right: 10px; }
       .prod-preview-grid { grid-template-columns: repeat(2,1fr); }
       .prod-card.featured img { min-height: 280px; }
-      .gallery-strip { grid-template-columns: 1fr 1fr; }
-      .gal-item.tall { grid-row: span 1; }
-      .gal-item.tall img { min-height: 260px; height: 260px; }
+      .gallery-strip { grid-template-columns: repeat(2,1fr); }
       .sucursales-mini-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 767px) {
@@ -392,7 +387,7 @@
 <!-- ── PRODUCTOS PREVIEW ── -->
 <section class="section section-cream reveal" style="padding-top:80px; padding-bottom:80px;">
   <div class="container text-center" style="margin-bottom:52px;">
-    <span class="eyebrow">Especialidades</span>
+    <span class="eyebrow">Línea Dulce</span>
     <h2 class="section-title">Nuestras <em>Creaciones</em></h2>
     <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
     <p class="section-desc">Tortas artesanales con sabores únicos y diseños irresistibles, elaboradas con los mejores ingredientes para cada celebración.</p>
@@ -401,7 +396,7 @@
     <div class="prod-card featured">
       <img src="product_2.jpg" alt="Torta Personalizada" />
       <div class="prod-card-overlay">
-        <div class="prod-card-label">Especialidad</div>
+        <div class="prod-card-label">Línea Dulce</div>
         <div class="prod-card-name">Tortas Personalizadas</div>
         <div class="prod-card-price">Desde 130 Bs</div>
       </div>
@@ -447,7 +442,7 @@
 <!-- ── CTA BAND ── -->
 <section class="cta-band reveal">
   <h2>¿Lista para hacer <em>tu pedido</em>?</h2>
-  <p>Con al menos 5 días de anticipación. Bodas y eventos grandes: 3–4 semanas.</p>
+  <p>Con al menos 3 días de anticipación. Bodas y eventos grandes: 3–4 semanas.</p>
   <a href="pedidos.html" class="btn">Hacer mi pedido ahora</a>
 </section>
 
@@ -459,20 +454,26 @@
     <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">✦</span><div class="ornament-line"></div></div>
   </div>
   <div class="gallery-strip container">
-    <div class="gal-item tall">
-      <img src="post_1.jpg" alt="Torta floral" />
-    </div>
     <div class="gal-item">
-      <img src="post_5.jpg" alt="Sucursal Más Deli" />
+      <img src="post_1.jpg" alt="Torta floral" />
     </div>
     <div class="gal-item">
       <img src="post_2.jpg" alt="Torta 3 Leches" />
     </div>
     <div class="gal-item">
-      <img src="post_7.jpg" alt="Día de la Madre" />
+      <img src="post_4.jpg" alt="Torta temática Paw Patrol" />
     </div>
     <div class="gal-item">
-      <img src="post_9.jpg" alt="Equipo Más Deli" />
+      <img src="post_8.jpg" alt="Torta Arcoíris" />
+    </div>
+    <div class="gal-item">
+      <img src="post-dia-amor.jpg" alt="Torta Día del Amor" />
+    </div>
+    <div class="gal-item">
+      <img src="post-trabajadora.jpg" alt="Decorando una torta Más Deli" />
+    </div>
+    <div class="gal-item">
+      <img src="post-dia-padre.jpg" alt="Torta Día del Padre" />
     </div>
   </div>
   <div class="gallery-cta">
@@ -494,17 +495,17 @@
     <div class="sucursal-mini">
       <div class="sucursal-mini-icon">🏪</div>
       <div class="sucursal-mini-name">Sucursal Américas</div>
-      <div class="sucursal-mini-zona">Zona Américas · Sucre</div>
+      <div class="sucursal-mini-zona">Zona Av. de las Américas · Sucre</div>
     </div>
     <div class="sucursal-mini">
       <div class="sucursal-mini-icon">🏬</div>
       <div class="sucursal-mini-name">Sucursal Pando</div>
-      <div class="sucursal-mini-zona">Zona Pando · Sucre</div>
+      <div class="sucursal-mini-zona">Zona Mercado Campesino · Sucre</div>
     </div>
     <div class="sucursal-mini">
       <div class="sucursal-mini-icon">🏭</div>
       <div class="sucursal-mini-name">Central & Fábrica</div>
-      <div class="sucursal-mini-zona">Sede Central · Sucre</div>
+      <div class="sucursal-mini-zona">Zona Alto San Juanillo · Sucre</div>
     </div>
   </div>
   <div class="text-center">
