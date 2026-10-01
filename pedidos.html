@@ -642,7 +642,7 @@
       <div class="cart-total-row" id="cartTotalRow">
         <div class="cart-total-label">Total estimado</div>
         <div class="cart-total-value" id="cartTotal">— Bs</div>
-        <div class="cart-anticipo">Anticipo (50%): <strong id="cartAnticipo">— Bs</strong></div>
+        <div class="cart-anticipo"><span id="cartAnticipoLabel">Anticipo (50%)</span>: <strong id="cartAnticipo">— Bs</strong></div>
       </div>
     </div>
 
@@ -665,6 +665,21 @@
       </div>
     </div>
 
+    <!-- 2b. Datos para la factura -->
+    <div class="form-section">
+      <div class="form-section-title"><span>📄</span> Datos para la factura</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="facturaRazonSocial">Razón Social/Nombre</label>
+          <input type="text" id="facturaRazonSocial" placeholder="Ej: María Pérez" />
+        </div>
+        <div class="form-group">
+          <label for="facturaNit">NIT/CI</label>
+          <input type="text" id="facturaNit" placeholder="Ej: 1234567" />
+        </div>
+      </div>
+    </div>
+
     <!-- 3. Entrega -->
     <div class="form-section">
       <div class="form-section-title"><span>🚗</span> Tipo de entrega</div>
@@ -679,9 +694,9 @@
       <div id="sucursalGroup" class="form-group">
         <label for="sucursal">Sucursal de recojo</label>
         <select id="sucursal">
-          <option value="Sucursal Américas (Calle Nicaragua Nro. 51B, Zona Av. de las Américas)">Sucursal Américas — Calle Nicaragua Nro. 51B</option>
+          <option value="Sucursal Nicaragua (Calle Nicaragua Nro. 51B, Zona Av. de las Américas)">Sucursal Nicaragua — Calle Nicaragua Nro. 51B</option>
           <option value="Sucursal Pando (Calle Pando Nro. 17A, Zona Mercado Campesino)">Sucursal Pando — Calle Pando Nro. 17A</option>
-          <option value="Central &amp; Fábrica (Calle Aiquile Nro. 19, Zona Alto San Juanillo)">Central &amp; Fábrica — Calle Aiquile Nro. 19</option>
+          <option value="Central &amp; Fábrica Aiquile (Calle Aiquile Nro. 19, Zona Alto San Juanillo)">Central &amp; Fábrica Aiquile — Calle Aiquile Nro. 19</option>
         </select>
       </div>
       <div id="addressGroup" class="form-group" style="display:none;">
@@ -695,20 +710,29 @@
         </div>
         <div class="form-group">
           <label for="horaEntrega">Hora de entrega</label>
-          <input type="time" id="horaEntrega" />
+          <select id="horaEntrega">
+            <option value="">— Selecciona —</option>
+            <option value="7:30 am">7:30 am</option>
+            <option value="8:30 am">8:30 am</option>
+            <option value="10:30 am">10:30 am</option>
+            <option value="12:30 pm">12:30 pm</option>
+            <option value="2:00 pm">2:00 pm</option>
+            <option value="4:00 pm">4:00 pm</option>
+            <option value="6:00 pm">6:00 pm</option>
+          </select>
         </div>
       </div>
     </div>
 
     <!-- 4. QR y anticipo -->
     <div class="form-section">
-      <div class="form-section-title"><span>💳</span> Anticipo de pago</div>
+      <div class="form-section-title"><span>💳</span> <span id="pagoSectionTitle">Anticipo de pago</span></div>
       <div class="qr-block">
         <div class="qr-block-title">Código QR de pago</div>
         <div class="qr-placeholder">
           <img class="qr-img" src="qr-pago.jpg" alt="Código QR de pago Más Deli - Banco Económico" />
         </div>
-        <div class="qr-anticipo">⚠️ Se requiere 50% de anticipo para confirmar el pedido</div>
+        <div class="qr-anticipo" id="qrAnticipoText">⚠️ Se requiere 50% de anticipo para confirmar el pedido</div>
         <button class="btn-download-qr" onclick="downloadQR()">⬇ Descargar QR</button>
       </div>
     </div>
@@ -718,7 +742,7 @@
       <button class="btn-send-order" onclick="openConfirmModal()">
         Enviar Pedido por WhatsApp
       </button>
-      <p class="send-note">Recuerda enviar el comprobante de pago del anticipo para confirmar tu pedido</p>
+      <p class="send-note" id="sendNoteText">Recuerda enviar el comprobante de pago del anticipo para confirmar tu pedido</p>
     </div>
   </div>
 
@@ -760,7 +784,7 @@
         Confirmar y Enviar
       </button>
     </div>
-    <div class="confirm-comprobante">
+    <div class="confirm-comprobante" id="confirmComprobanteText">
       📎 Recuerda enviar el comprobante de pago del anticipo (50%) al confirmar tu pedido.
     </div>
   </div>
@@ -786,9 +810,9 @@
     </div>
     <div class="footer-col">
       <h4>Sucursales</h4>
-      <p>Sucursal Américas · +591 786 60109</p><br/>
+      <p>Sucursal Nicaragua · +591 786 60109</p><br/>
       <p>Sucursal Pando · +591 754 51278</p><br/>
-      <p>Central & Fábrica · +591 744 05636</p>
+      <p>Central & Fábrica Aiquile · +591 744 05636</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -797,7 +821,7 @@
   </div>
 </footer>
 
-<a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Quiero%20hacer%20un%20pedido%20🎂" target="_blank" class="wa-float">
+<a href="https://wa.me/59174405636?text=Hola%20Más%20Deli!%20Quiero%20hacer%20un%20pedido%20🎂" target="_blank" class="wa-float">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -1011,15 +1035,30 @@
     updateTotal();
   }
 
+  function getPagoInfo(total) {
+    const esEnvio = deliveryType === 'envio';
+    const monto = esEnvio ? total : Math.ceil(total / 2);
+    return { pct: esEnvio ? 100 : 50, monto, label: esEnvio ? 'Pago total' : 'Anticipo' };
+  }
+
+  function updatePagoTexts() {
+    const pago = getPagoInfo(0);
+    document.getElementById('pagoSectionTitle').textContent = pago.pct === 100 ? 'Pago total' : 'Anticipo de pago';
+    document.getElementById('qrAnticipoText').textContent = `⚠️ Se requiere ${pago.pct}% de pago para confirmar el pedido`;
+    document.getElementById('sendNoteText').textContent = `Recuerda enviar el comprobante de pago${pago.pct === 100 ? '' : ' del anticipo'} para confirmar tu pedido`;
+    document.getElementById('confirmComprobanteText').textContent = `📎 Recuerda enviar el comprobante de pago${pago.pct === 100 ? ' completo' : ' del anticipo'} (${pago.pct}%) al confirmar tu pedido.`;
+  }
+
   function updateTotal() {
     const totalRow = document.getElementById('cartTotalRow');
     const priced = cart.filter(i => i.subtotal !== null);
     if (priced.length === 0) { totalRow.style.display = 'none'; return; }
 
     const total = priced.reduce((s, i) => s + i.subtotal, 0);
-    const anticipo = Math.ceil(total / 2);
+    const pago = getPagoInfo(total);
     document.getElementById('cartTotal').textContent = total + ' Bs';
-    document.getElementById('cartAnticipo').textContent = anticipo + ' Bs';
+    document.getElementById('cartAnticipoLabel').textContent = `${pago.label} (${pago.pct}%)`;
+    document.getElementById('cartAnticipo').textContent = pago.monto + ' Bs';
     totalRow.style.display = 'block';
   }
 
@@ -1040,6 +1079,8 @@
     document.getElementById('optEnvio').classList.toggle('selected', type === 'envio');
     document.getElementById('addressGroup').style.display = type === 'envio' ? 'block' : 'none';
     document.getElementById('sucursalGroup').style.display = type === 'recojo' ? 'block' : 'none';
+    updateTotal();
+    updatePagoTexts();
   }
 
   // ── DECORATION MODAL ──
@@ -1094,11 +1135,13 @@
     });
 
     const total = cart.reduce((s, i) => s + i.subtotal, 0);
-    const anticipo = Math.ceil(total / 2);
+    const pago = getPagoInfo(total);
     const entrega = getEntregaText();
     const nombre = document.getElementById('clienteNombre').value.trim();
     const ci = document.getElementById('clienteCI').value.trim();
     const celular = document.getElementById('clienteCelular').value.trim();
+    const facturaRazonSocial = document.getElementById('facturaRazonSocial').value.trim();
+    const facturaNit = document.getElementById('facturaNit').value.trim();
     const fecha = formatFecha(document.getElementById('fechaEntrega').value);
     const hora = document.getElementById('horaEntrega').value;
 
@@ -1110,10 +1153,11 @@
 
     document.getElementById('confirmSummary').innerHTML = `
       <strong>Cliente:</strong> ${nombre} · CI ${ci} · ${celular}<br>
+      ${facturaRazonSocial || facturaNit ? `<strong>Factura:</strong> ${facturaRazonSocial || '—'} · NIT/CI ${facturaNit || '—'}<br>` : ''}
       <strong>Entrega:</strong> ${fecha}${hora ? ' a las ' + hora : ''}<br><br>
       ${itemRows}<br>
       <strong>Total:</strong> ${total} Bs<br>
-      <strong>Anticipo (50%):</strong> ${anticipo} Bs<br>
+      <strong>${pago.label} (${pago.pct}%):</strong> ${pago.monto} Bs<br>
       <strong>${deliveryType === 'recojo' ? 'Sucursal' : 'Envío'}:</strong> ${entrega}
     `;
     document.getElementById('confirmModal').classList.add('open');
@@ -1123,11 +1167,13 @@
 
   function sendOrder() {
     const total = cart.reduce((s, i) => s + i.subtotal, 0);
-    const anticipo = Math.ceil(total / 2);
+    const pago = getPagoInfo(total);
     const entrega = getEntregaText();
     const nombre = document.getElementById('clienteNombre').value.trim();
     const ci = document.getElementById('clienteCI').value.trim();
     const celular = document.getElementById('clienteCelular').value.trim();
+    const facturaRazonSocial = document.getElementById('facturaRazonSocial').value.trim();
+    const facturaNit = document.getElementById('facturaNit').value.trim();
     const fecha = formatFecha(document.getElementById('fechaEntrega').value);
     const hora = document.getElementById('horaEntrega').value;
 
@@ -1143,9 +1189,11 @@
       return line;
     }).join('\n');
 
-    const msg = `🎂 *PEDIDO - MÁS DELI*\n\n*CLIENTE:* ${nombre}\n*CI:* ${ci}\n*Celular:* ${celular}\n\n*TORTAS:*\n${itemsText}\n\n*Total estimado:* ${total} Bs\n*Anticipo (50%):* ${anticipo} Bs\n*Fecha de entrega:* ${fecha}${hora ? ' a las ' + hora : ''}\n*Entrega:* ${entrega}\n\n_Por favor envía el comprobante de pago del anticipo para confirmar tu pedido._ 📎`;
+    const facturaText = (facturaRazonSocial || facturaNit) ? `\n\n*DATOS PARA FACTURA:*\n*Razón Social/Nombre:* ${facturaRazonSocial || '—'}\n*NIT/CI:* ${facturaNit || '—'}` : '';
 
-    window.open(`https://wa.me/59178660109?text=${encodeURIComponent(msg)}`, '_blank');
+    const msg = `🎂 *PEDIDO - MÁS DELI*\n\n*CLIENTE:* ${nombre}\n*CI:* ${ci}\n*Celular:* ${celular}${facturaText}\n\n*TORTAS:*\n${itemsText}\n\n*Total estimado:* ${total} Bs\n*${pago.label} (${pago.pct}%):* ${pago.monto} Bs\n*Fecha de entrega:* ${fecha}${hora ? ' a las ' + hora : ''}\n*Entrega:* ${entrega}\n\n_Por favor envía el comprobante de pago${pago.pct === 100 ? ' completo' : ' del anticipo'} para confirmar tu pedido._ 📎`;
+
+    window.open(`https://wa.me/59174405636?text=${encodeURIComponent(msg)}`, '_blank');
     closeConfirmModal();
   }
 

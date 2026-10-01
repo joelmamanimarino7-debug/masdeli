@@ -29,7 +29,7 @@
     "@graph": [
       {
         "@type": "Bakery",
-        "name": "Más Deli - Sucursal Américas",
+        "name": "Más Deli - Sucursal Nicaragua",
         "telephone": "+59178660109",
         "url": "https://masdeli.com/contratos.html",
         "image": "https://masdeli.com/og-image.jpg",
@@ -65,7 +65,7 @@
       },
       {
         "@type": "Bakery",
-        "name": "Más Deli - Central & Fábrica",
+        "name": "Más Deli - Central & Fábrica Aiquile",
         "telephone": "+59174405636",
         "url": "https://masdeli.com/contratos.html",
         "image": "https://masdeli.com/og-image.jpg",
@@ -293,11 +293,11 @@
   <div class="branches-grid">
 
     <div class="branch-card reveal" style="background-image:url('branch-americas.jpg');">
-      <div class="branch-name">Sucursal Américas</div>
+      <div class="branch-name">Sucursal Nicaragua</div>
       <div class="branch-zona">Calle Nicaragua Nro. 51B · Zona Av. de las Américas</div>
       <div class="branch-phone">+591 786 60109</div>
       <div class="branch-btns">
-        <a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Sucursal%20Américas%20🎂%20Quiero%20información%20sobre%20contratos." target="_blank" class="btn-wa-branch">
+        <a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Sucursal%20Nicaragua%20🎂%20Quiero%20información%20sobre%20contratos." target="_blank" class="btn-wa-branch">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
         </a>
@@ -319,7 +319,7 @@
     </div>
 
     <div class="branch-card reveal" style="background-image:url('branch-central.jpg');">
-      <div class="branch-name">Central & Fábrica</div>
+      <div class="branch-name">Central & Fábrica Aiquile</div>
       <div class="branch-zona">Calle Aiquile Nro. 19 · Zona Alto San Juanillo</div>
       <div class="branch-phone">+591 744 05636</div>
       <div class="branch-btns">
@@ -456,38 +456,27 @@
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label for="evPersonas">Número de personas aproximado *</label>
-        <input type="number" id="evPersonas" placeholder="Ej: 50" min="1" />
-      </div>
-      <div class="form-group">
-        <label for="evPresupuesto">Presupuesto aproximado (Bs)</label>
-        <input type="text" id="evPresupuesto" placeholder="Ej: 500 Bs" />
-      </div>
+    <div class="form-group">
+      <label for="evPersonas">Número de personas aproximado *</label>
+      <input type="number" id="evPersonas" placeholder="Ej: 50" min="1" />
     </div>
 
     <div class="form-group">
-      <label for="evProductos">Productos de interés</label>
+      <label for="evProductos">Producto de interés</label>
       <select id="evProductos">
-        <option value="">— Selecciona el tipo —</option>
-        <option>Solo torta principal</option>
-        <option>Torta + postres adicionales</option>
-        <option>Catering completo de dulces</option>
-        <option>Mesa de postres para evento</option>
-        <option>Torta temática personalizada</option>
-        <option>Torta de varios pisos (boda)</option>
-        <option>A definir con el equipo</option>
+        <option value="">— Selecciona —</option>
+        <option>Torta</option>
+        <option>Postre</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="evSucursal">Sucursal de preferencia</label>
-      <select id="evSucursal">
-        <option value="">— Cualquiera disponible —</option>
-        <option value="americas">Sucursal Américas (+591 786 60109)</option>
+      <label for="evSucursal">Sucursal para ser atendido *</label>
+      <select id="evSucursal" required>
+        <option value="" disabled selected>— Selecciona —</option>
+        <option value="americas">Sucursal Nicaragua (+591 786 60109)</option>
         <option value="pando">Sucursal Pando (+591 754 51278)</option>
-        <option value="central">Central & Fábrica (+591 744 05636)</option>
+        <option value="central">Central & Fábrica Aiquile (+591 744 05636)</option>
       </select>
     </div>
 
@@ -583,9 +572,9 @@
     </div>
     <div class="footer-col">
       <h4>Sucursales</h4>
-      <p>Sucursal Américas · +591 786 60109</p><br/>
+      <p>Sucursal Nicaragua · +591 786 60109</p><br/>
       <p>Sucursal Pando · +591 754 51278</p><br/>
-      <p>Central & Fábrica · +591 744 05636</p>
+      <p>Central & Fábrica Aiquile · +591 744 05636</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -594,7 +583,7 @@
   </div>
 </footer>
 
-<a href="https://wa.me/59178660109?text=Hola%20Más%20Deli!%20Quiero%20información%20sobre%20contratos%20y%20eventos%20🎂" target="_blank" class="wa-float">
+<a href="https://wa.me/59174405636?text=Hola%20Más%20Deli!%20Quiero%20información%20sobre%20contratos%20y%20eventos%20🎂" target="_blank" class="wa-float">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -608,19 +597,30 @@
   }
 
   // Event form send
+  const SUCURSAL_WHATSAPP = {
+    americas: '59178660109',
+    pando: '59175451278',
+    central: '59174405636',
+  };
+
   function sendEventForm() {
     const nombre = document.getElementById('evNombre').value.trim();
     const tel = document.getElementById('evTelefono').value.trim();
     const evento = document.getElementById('evTipoEvento').value;
     const fecha = document.getElementById('evFecha').value;
     const personas = document.getElementById('evPersonas').value;
-    const presupuesto = document.getElementById('evPresupuesto').value.trim();
     const productos = document.getElementById('evProductos').value;
-    const sucursal = document.getElementById('evSucursal').options[document.getElementById('evSucursal').selectedIndex].text;
+    const sucursalSelect = document.getElementById('evSucursal');
+    const sucursalValue = sucursalSelect.value;
+    const sucursal = sucursalSelect.options[sucursalSelect.selectedIndex].text;
     const detalles = document.getElementById('evDetalles').value.trim();
 
     if (!nombre || !tel || !evento) {
       alert('Por favor completa los campos obligatorios: nombre, teléfono y tipo de evento.');
+      return;
+    }
+    if (!sucursalValue) {
+      alert('Por favor selecciona la sucursal donde quieres ser atendido.');
       return;
     }
 
@@ -631,14 +631,13 @@
 🎉 *Tipo de evento:* ${evento}
 📅 *Fecha del evento:* ${fecha || 'Por definir'}
 👥 *Personas aprox.:* ${personas || 'Por definir'}
-💰 *Presupuesto:* ${presupuesto || 'Por definir'}
-🎂 *Productos:* ${productos || 'Por definir'}
+🎂 *Producto de interés:* ${productos || 'Por definir'}
 🏪 *Sucursal:* ${sucursal}
 📝 *Detalles:* ${detalles || 'Sin detalles adicionales'}
 
 _Por favor contáctame para coordinar los detalles y la cotización._`;
 
-    const whatsappNum = '59178660109';
+    const whatsappNum = SUCURSAL_WHATSAPP[sucursalValue];
     window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 </script>
