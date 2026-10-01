@@ -506,7 +506,7 @@
         ¿Con cuánta anticipación debo hacer mi pedido?
         <span class="arrow">▾</span>
       </button>
-      <div class="faq-a">Para pedidos regulares, recomendamos al menos <strong>3 días de anticipación</strong>. Para bodas, eventos corporativos o tortas de varios pisos, lo ideal es contactarnos con <strong>3 a 4 semanas</strong> de anticipación para garantizar disponibilidad y el mejor resultado.</div>
+      <div class="faq-a">Para pedidos de tortas, el mínimo es <strong>1 día de anticipación</strong>. Para contratos de evento, el mínimo es <strong>3 días de anticipación</strong>; si es una boda, evento corporativo o torta de varios pisos, lo ideal es contactarnos con <strong>3 a 4 semanas</strong> de anticipación para garantizar disponibilidad y el mejor resultado.</div>
     </div>
 
     <div class="faq-item">
@@ -595,6 +595,13 @@
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
+
+  // Fecha mínima del evento: 3 días de anticipación
+  (function () {
+    const min = new Date();
+    min.setDate(min.getDate() + 3);
+    document.getElementById('evFecha').min = min.toISOString().split('T')[0];
+  })();
 
   // Event form send
   const SUCURSAL_WHATSAPP = {

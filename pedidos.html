@@ -864,10 +864,10 @@
   updateSliderHeight();
   window.addEventListener('resize', updateSliderHeight);
 
-  // Fecha mínima de entrega: 3 días de anticipación
+  // Fecha mínima de entrega: 1 día de anticipación
   (function () {
     const min = new Date();
-    min.setDate(min.getDate() + 3);
+    min.setDate(min.getDate() + 1);
     document.getElementById('fechaEntrega').min = min.toISOString().split('T')[0];
   })();
 
