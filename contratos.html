@@ -588,7 +588,8 @@
   (function () {
     const min = new Date();
     min.setDate(min.getDate() + 3);
-    document.getElementById('evFecha').min = min.toISOString().split('T')[0];
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('evFecha').min = `${min.getFullYear()}-${pad(min.getMonth() + 1)}-${pad(min.getDate())}`;
   })();
 
   // Event form send
